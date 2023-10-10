@@ -28,9 +28,18 @@ ht_m = hb * y2_h
 fi_bept = ((qt_m3s) / ((n_rps)*(d**3)))
 psi_bept = (9.81*ht_m) / ((n_rps * d)**2)
 fi_t = []
-fi_t[0] = fi_bept
+psi_t = []
+fi_t.append(fi_bept)
 
-for x in range(1, 18):
-    fi_t[x] =  fi_t[x - 1] - 0.3 
+for x in range(1, 39):
+    psi_t.insert(0, psi_bept*(0.2394*(fi_t[0]/fi_bept)**2 + 0.769*(fi_t[0]/fi_bept)))
+    fi_t.insert(0, fi_t[x - 1] - (0.003 * x))
 
-print(fi_t)
+
+#print(fi_bept, "\n", fi_t) 
+#for x in range(39, 58):
+#    fi_t.append(fi_t[x - 1] + 0.003)
+
+print("----------------------------------------")
+print(fi_bept, fi_t[0], psi_t[0])
+#print(psi_t)
