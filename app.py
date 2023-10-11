@@ -29,17 +29,23 @@ fi_bept = ((qt_m3s) / ((n_rps)*(d**3)))
 psi_bept = (9.81*ht_m) / ((n_rps * d)**2)
 fi_t = []
 psi_t = []
+eta_t = []
+qt_ls = []
 fi_t.append(fi_bept)
 
-for x in range(1, 39):
+for x in range(1, 40):
     psi_t.insert(0, psi_bept*(0.2394*(fi_t[0]/fi_bept)**2 + 0.769*(fi_t[0]/fi_bept)))
+    eta_t.insert(0, ((-1.9788*((fi_t[0]/fi_bept)**6))+(9.0636*((fi_t[0]/fi_bept)**5))-(13.148*((fi_t[0]/fi_bept)**4))+(3.8527*((fi_t[0]/fi_bept)**3))+(4.5614*((fi_t[0]/fi_bept)**2))-(1.3769*((fi_t[0]/fi_bept))))*(nb))
+    qt_ls.insert(0, ((fi_t[0])*((n_rps)*(d**3)))*1000)
     fi_t.insert(0, fi_t[x - 1] - (0.003 * x))
-
-
-#print(fi_bept, "\n", fi_t) 
-#for x in range(39, 58):
-#    fi_t.append(fi_t[x - 1] + 0.003)
+print (len(psi_t))             
+for x in range(40, 58):
+    psi_t.append(psi_bept*(0.2394*(fi_t[x-1]/fi_bept)**2 + 0.769*(fi_t[x-1]/fi_bept)))
+    eta_t.append(((-1.9788*((fi_t[x-1]/fi_bept)**6))+(9.0636*((fi_t[x-1]/fi_bept)**5))-(13.148*((fi_t[x-1]/fi_bept)**4))+(3.8527*((fi_t[x-1]/fi_bept)**3))+(4.5614*((fi_t[x-1]/fi_bept)**2))-(1.3769*((fi_t[x-1]/fi_bept))))*(nb))
+    qt_ls.append(((fi_t[x-1])*((n_rps)*(d**3)))*1000)
+    fi_t.append(fi_t[x - 1] + 0.003)
 
 print("----------------------------------------")
-print(fi_bept, fi_t[0], psi_t[0])
+for x in range(0, 57):
+    print(x, psi_t[x])
 #print(psi_t)
