@@ -1,5 +1,5 @@
 import math
-import matplotlib
+from matplotlib import pyplot as plt
 
 ####YANG - 1
 y1_nib = 0.70
@@ -31,21 +31,36 @@ fi_t = []
 psi_t = []
 eta_t = []
 qt_ls = []
+h_m = []
 fi_t.append(fi_bept)
-
 for x in range(1, 40):
-    psi_t.insert(0, psi_bept*(0.2394*(fi_t[0]/fi_bept)**2 + 0.769*(fi_t[0]/fi_bept)))
-    eta_t.insert(0, ((-1.9788*((fi_t[0]/fi_bept)**6))+(9.0636*((fi_t[0]/fi_bept)**5))-(13.148*((fi_t[0]/fi_bept)**4))+(3.8527*((fi_t[0]/fi_bept)**3))+(4.5614*((fi_t[0]/fi_bept)**2))-(1.3769*((fi_t[0]/fi_bept))))*(nb))
-    qt_ls.insert(0, ((fi_t[0])*((n_rps)*(d**3)))*1000)
     fi_t.insert(0, fi_t[x - 1] - (0.003 * x))
-print (len(psi_t))             
-for x in range(40, 58):
-    psi_t.append(psi_bept*(0.2394*(fi_t[x-1]/fi_bept)**2 + 0.769*(fi_t[x-1]/fi_bept)))
-    eta_t.append(((-1.9788*((fi_t[x-1]/fi_bept)**6))+(9.0636*((fi_t[x-1]/fi_bept)**5))-(13.148*((fi_t[x-1]/fi_bept)**4))+(3.8527*((fi_t[x-1]/fi_bept)**3))+(4.5614*((fi_t[x-1]/fi_bept)**2))-(1.3769*((fi_t[x-1]/fi_bept))))*(nb))
-    qt_ls.append(((fi_t[x-1])*((n_rps)*(d**3)))*1000)
+
+for x in range(40, 60):
     fi_t.append(fi_t[x - 1] + 0.003)
 
+for x in range(0, len(fi_t)):
+    psi_t.append(psi_bept*(0.2394*(fi_t[x]/fi_bept)**2 + 0.769*(fi_t[x]/fi_bept)))
+    eta_t.append(((-1.9788*((fi_t[x]/fi_bept)**6))+(9.0636*((fi_t[x]/fi_bept)**5))-(13.148*((fi_t[x]/fi_bept)**4))+(3.8527*((fi_t[x]/fi_bept)**3))+(4.5614*((fi_t[x]/fi_bept)**2))-(1.3769*((fi_t[x]/fi_bept))))*(nb))
+    qt_ls.append((((fi_t[x])*((n_rps)*(d**3)))*1000)/3.6)
+    h_m.append((psi_t[x]*(n_rps * d)**2) / 9.81)
 print("----------------------------------------")
-for x in range(0, 57):
-    print(x, psi_t[x])
-#print(psi_t)
+for x in range(0, len(fi_t)):
+    print(x, fi_t[x],  "|", qt_ls[x])
+
+figure, axis = plt.subplots(2, 2) 
+
+axis[0, 0].plot(fi_t, psi_t)
+axis[0, 0].set_title("fi/psi") 
+
+axis[0, 1].plot(fi_t, eta_t)
+axis[0, 1].set_title("fi/eta") 
+
+axis[1, 0].plot(qt_ls, h_m)
+axis[1, 0].set_title("qt/h") 
+
+axis[1, 1].plot(qt_ls, eta_t)
+axis[1, 1].set_title("qt/eta") 
+
+
+plt.show()
