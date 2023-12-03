@@ -1,5 +1,18 @@
 import math
 from matplotlib import pyplot as plt
+import eel
+
+eel.init('web')
+@eel.expose
+def auto_calculate(value, name):
+    if name == "y1_nib":
+        y1_q = ((1.2)/value**0.55)
+        y1_h = ((1.2)/value**1.1)
+        return {"y1_q":y1_q, "y1_h":y1_h}
+
+
+eel.start('main.html', mode='default')
+
 
 ####YANG - 1
 y1_nib = 0.70
@@ -15,8 +28,8 @@ n_rps = n_rpm / 60
 d = 0.123
 nb = 0.670
 p_kw = 16.50
-ns_rps = (n_rps * qb_m3s**0.5)/(9.81*hb)**0.75
-ns_rad = 2*math.pi*ns_rps
+y1_ns_rps = (n_rps * qb_m3s**0.5)/(9.81*hb)**0.75
+y1_ns_rad = 2*math.pi*y1_ns_rps
 
 ###YANG - 2
 y2_nb = 0.670
@@ -27,6 +40,8 @@ qt_m3h = qt_m3s * 3600
 ht_m = hb * y2_h
 fi_bept = ((qt_m3s) / ((n_rps)*(d**3)))
 psi_bept = (9.81*ht_m) / ((n_rps * d)**2)
+y2_ns_rps = (n_rps * qt_m3s**0.5)/(9.81*hb)**0.75
+y2_ns_rad = 2*math.pi*y2_ns_rps
 fi_t = []
 psi_t = []
 eta_t = []
@@ -44,9 +59,9 @@ for x in range(0, len(fi_t)):
     eta_t.append(((-1.9788*((fi_t[x]/fi_bept)**6))+(9.0636*((fi_t[x]/fi_bept)**5))-(13.148*((fi_t[x]/fi_bept)**4))+(3.8527*((fi_t[x]/fi_bept)**3))+(4.5614*((fi_t[x]/fi_bept)**2))-(1.3769*((fi_t[x]/fi_bept))))*(nb))
     qt_ls.append((((fi_t[x])*((n_rps)*(d**3)))*1000)/3.6)
     h_m.append((psi_t[x]*(n_rps * d)**2) / 9.81)
-print("----------------------------------------")
-for x in range(0, len(fi_t)):
-    print(x, fi_t[x],  "|", qt_ls[x])
+#print("----------------------------------------")
+#for x in range(0, len(fi_t)):
+    #print(x, fi_t[x],  "|", qt_ls[x])
 
 figure, axis = plt.subplots(2, 2) 
 
@@ -63,4 +78,4 @@ axis[1, 1].plot(qt_ls, eta_t)
 axis[1, 1].set_title("qt/eta") 
 
 
-plt.show()
+#plt.show()
