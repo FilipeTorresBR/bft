@@ -4,116 +4,128 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Calculo BFT</title>
+    <link rel="stylesheet" href="style.css">
 </head>
-<body onload="start()">
+<body>
     <form id="form">
         <h1>Yang 1</h1>
-        <div class="field">
-            <label for="y1_nib">ηib</label>
-            <input type="text" id="y1_nib" name="y1_nib" onchange="autoCalculate(this)" value="0.7">
+        <div class="model" id="yang1">
+            <div class="field">
+                <label for="y1_nib">ηib</label>
+                <input type="text" id="y1_nib" name="y1_nib" onchange="autoCalculate(this, ['qti', 'hti', 'n_rpm'])" value="0.7">
+            </div>
+            <div class="field">
+                <label for="y1_q">q</label>
+                <input type="text" id="y1_q" name="y1_q"  readonly="true">
+            </div>
+            <div class="field">
+                <label for="y1_h">h</label>
+                <input type="text" id="y1_h" name="y1_h" readonly="true">
+            </div>
+            <div class="field">
+                <label for="qti">Qti (m³/s)</label>
+                <input type="text" id="qti" name="qti" value="0.0198">
+            </div>        
+            <div class="field">
+                <label for="hti">Hti (m)</label>
+                <input type="text" id="hti" name="hti" value="39.89">
+            </div>    
+            <div class="field">
+                <label for="qb_m3s">Qb (m³/s)</label>
+                <input type="text" id="qb_m3s" name="qb_m3s" readonly="true">
+            </div>    
+            <div class="field">
+                <label for="qb_m3h">Qb (m³/h)</label>
+                <input type="text" id="qb_m3h" name="qb_m3h" readonly="true">
+            </div>    
+            <div class="field">
+                <label for="hb">Hb (m)</label>
+                <input type="text" id="hb" name="hb" readonly="true">
+            </div>   
+            <div class="field">
+                <label for="n_rpm">N (rpm)</label>
+                <input type="text" id="n_rpm" name="n_rpm" value="3500">
+            </div>     
+            <div class="field">
+                <label for="n_rps">N (rps)</label>
+                <input type="text" id="n_rps" name="n_rps" readonly="true">
+            </div>     
+            <div class="field">
+                <label for="d">D (m)</label>
+                <input type="text" id="d" name="d" value="0.123">
+            </div>     
+            <div class="field">
+                <label for="nb">ηb</label>
+                <input type="text" id="nb" name="nb" value="0.670">
+            </div>  
+            <div class="field">
+                <label for="p_kw">P (kW)</label>
+                <input type="text" id="p_kw" name="p_kw" value="16.50">
+            </div> 
+            <div class="field">
+                <label for="y1_ns_rps">Ns (rps)</label>
+                <input type="text" id="y1_ns_rps" name="y1_ns_rps" readonly="true">
+            </div>  
+            <div class="field">
+                <label for="y1_ns_rad">Ns (rad/s)</label>
+                <input type="text" id="y1_ns_rad" name="y1_ns_rad" readonly="true">
+            </div>  
         </div>
-        <div class="field">
-            <label for="y1_q">q</label>
-            <input type="text" id="y1_q" name="y1_q"  readonly="true">
-        </div>
-        <div class="field">
-            <label for="y1_h">h</label>
-            <input type="text" id="y1_h" name="y1_h" readonly="true">
-        </div>
-        <div class="field">
-            <label for="qti">Qti (m³/s)</label>
-            <input type="text" id="qti" name="qti" value="0.0198">
-        </div>        
-        <div class="field">
-            <label for="hti">Hti (m)</label>
-            <input type="text" id="hti" name="hti" value="39.89">
-        </div>    
-        <div class="field">
-            <label for="qb_m3s">Qb (m³/s)</label>
-            <input type="text" id="qb_m3s" name="qb_m3s" value="">
-        </div>    
-        <div class="field">
-            <label for="qb_m3h">Qb (m³/h)</label>
-            <input type="text" id="qb_m3h" name="qb_m3h" value="">
-        </div>    
-        <div class="field">
-            <label for="hb">Hb (m)</label>
-            <input type="text" id="hb" name="hb" value="">
-        </div>   
-        <div class="field">
-            <label for="n_rpm">N (rpm)</label>
-            <input type="text" id="n_rpm" name="n_rpm" value="3500">
-        </div>     
-        <div class="field">
-            <label for="n_rps">N (rps)</label>
-            <input type="text" id="n_rps" name="n_rps" value="">
-        </div>     
-        <div class="field">
-            <label for="d">D (m)</label>
-            <input type="text" id="d" name="d" value="0.123">
-        </div>     
-        <div class="field">
-            <label for="nb">ηb</label>
-            <input type="text" id="nb" name="nb" value="0.670"
-        </div>  
-        <div class="field">
-            <label for="p_kw">P (kW)</label>
-            <input type="text" id="p_kw" name="p_kw" value="16.50">
-        </div> 
-        <div class="field">
-            <label for="y1_ns_rps">Ns (rps)</label>
-            <input type="text" id="y1_ns_rps" name="ns_rps" value="">
-        </div>  
-        <div class="field">
-            <label for="y1_ns_rad">Ns (rad/s)</label>
-            <input type="text" id="y1_ns_rad" name="ns_rad" value="">
-        </div>  
-
         <h1>Yang 2</h1>
-        <div class="field">
-            <label for="y2_nb">ηb</label>
-            <input type="text" id="y2_nb" name="y2_nb" value="0.67">
-        </div>
-        <div class="field">
-            <label for="y2_q">q</label>
-            <input type="text" id="y2_q" name="y2_q" value="">
-        </div>
-        <div class="field">
-            <label for="y2_h">h</label>
-            <input type="text" id="y2_h" name="y2_h" value="">
-        </div>
-        <div class="field">
-            <label for="qt_m3s">Qt (m³/s)</label>
-            <input type="text" id="qt_m3s" name="qt_m3s" value="">
-        </div>
-        <div class="field">
-            <label for="qt_m3h">Qt (m³/h)</label>
-            <input type="text" id="qt_m3h" name="qt_m3h" value="">
-        </div>
-        <div class="field">
-            <label for="ht_m">Ht (m)</label>
-            <input type="text" id="ht_m" name="ht_m" value="">
-        </div>
-        <div class="field">
-            <label for="fi_bept">φ BEPt</label>
-            <input type="text" id="fi_bept" name="fi_bept" value="">
-        </div>
-        <div class="field">
-            <label for="psi_bept">ψ BEPt</label>
-            <input type="text" id="psi_bept" name="psi_bept" value="">
-        </div>
-        <div class="field">
-            <label for="y2_ns_rps">Ns (rps)</label>
-            <input type="text" id="y2_ns_rps" name="y2_ns_rps" value="">
-        </div>
-        <div class="field">
-            <label for="y2_ns_rad">Ns (rad/s)</label>
-            <input type="text" id="y2_ns_rad" name="ns_rad" value="">
+        <div class="model" id="yang2">
+            <div class="field">
+                <label for="y2_nb">ηb</label>
+                <input type="text" id="y2_nb" name="y2_nb" onchange="autoCalculate(this, ['qb_m3s', 'hb', 'n_rps', 'd'])" value="0.67">
+            </div>
+            <div class="field">
+                <label for="y2_q">q</label>
+                <input type="text" id="y2_q" name="y2_q" readonly="true"">
+            </div>
+            <div class="field">
+                <label for="y2_h">h</label>
+                <input type="text" id="y2_h" name="y2_h" readonly="true">
+            </div>
+            <div class="field">
+                <label for="qt_m3s">Qt (m³/s)</label>
+                <input type="text" id="qt_m3s" name="qt_m3s" readonly="true">
+            </div>
+            <div class="field">
+                <label for="qt_m3h">Qt (m³/h)</label>
+                <input type="text" id="qt_m3h" name="qt_m3h" readonly="true">
+            </div>
+            <div class="field">
+                <label for="ht_m">Ht (m)</label>
+                <input type="text" id="ht_m" name="ht_m" readonly="true">
+            </div>
+            <div class="field">
+                <label for="fi_bept">φ BEPt</label>
+                <input type="text" id="fi_bept" name="fi_bept" readonly="true">
+            </div>
+            <div class="field">
+                <label for="psi_bept">ψ BEPt</label>
+                <input type="text" id="psi_bept" name="psi_bept" readonly="true">
+            </div>
+            <div class="field">
+                <label for="y2_ns_rps">Ns (rps)</label>
+                <input type="text" id="y2_ns_rps" name="y2_ns_rps" readonly="true">
+            </div>
+            <div class="field">
+                <label for="y2_ns_rad">Ns (rad/s)</label>
+                <input type="text" id="y2_ns_rad" name="ns_rad" readonly="true">
+            </div>
         </div>
     </form>
-    <button type="button" onclick="">Enviar</button>
+    <input type="button" value="Gerar Grafico" onclick="generatePlot(['psi_bept', 'fi_bept', 'n_rps', 'd', 'nb'])">
+    <div id="grafico"></div>
+    <footer>
+        <span>Desenvolvido por Filipe Torres</span>
+    </footer>
 </body>
-
+<script>
+window.onload = function() {
+  start();
+};
+</script>
 <script src="eel.js"></script>
 <script src="script.js"></script>
 </html>
