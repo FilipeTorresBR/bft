@@ -15,6 +15,7 @@ function getDependency(dependency){
     return dependencyObject;
 }
 function autoCalculate(field, dependency) {
+    if (typeof field == "string") {field = document.getElementById('y1_nib')}
     var inputValue = parseFloat(field.value);
     var inputName = field.name;
     var fieldDependency = getDependency(dependency)
@@ -29,10 +30,12 @@ function autoCalculate(field, dependency) {
         y1_ns_rps = (n_rps * Math.pow(qb_m3s, 0.5))/Math.pow((9.81*hb), 0.75)
         y1_ns_rad = 2*Math.PI*y1_ns_rps
         applyChanges({"y1_q":y1_q, "y1_h":y1_h, "qb_m3s":qb_m3s, "qb_m3h":qb_m3h, "hb":hb, "n_rps":n_rps, "y1_ns_rps":y1_ns_rps, "y1_ns_rad":y1_ns_rad})
-        return 0
-    }
 
-    else if (inputName == "y2_nb"){
+
+        field = document.getElementById('y2_nb')
+        var inputValue = parseFloat(field.value);
+        var fieldDependency = getDependency(['qb_m3s', 'hb', 'n_rps', 'd'])
+
         y2_q = ((1.2)/Math.pow(inputValue, 0.55))
         y2_h = ((1.2)/Math.pow(inputValue, 1.1))
         qt_m3s = fieldDependency['qb_m3s'] * y2_q
@@ -43,7 +46,18 @@ function autoCalculate(field, dependency) {
         y2_ns_rps = (fieldDependency['n_rps'] * Math.pow(qt_m3s, 0.5))/Math.pow(9.81*(fieldDependency['hb']), 0.75)
         y2_ns_rad = 2*Math.PI*y2_ns_rps
         applyChanges({"y2_q":y2_q, "y2_h":y2_h, "qt_m3s":qt_m3s, "qt_m3h":qt_m3h, "ht_m":ht_m, "fi_bept":fi_bept, "psi_bept":psi_bept, "y2_ns_rps":y2_ns_rps, "y2_ns_rad":y2_ns_rad})
-        return 0
+    }
+    if (inputName == "y2_nb"){
+        y2_q = ((1.2)/Math.pow(inputValue, 0.55))
+        y2_h = ((1.2)/Math.pow(inputValue, 1.1))
+        qt_m3s = fieldDependency['qb_m3s'] * y2_q
+        qt_m3h = qt_m3s * 3600
+        ht_m = fieldDependency['hb'] * y2_h
+        fi_bept = ((qt_m3s) / ((fieldDependency['n_rps']) * (Math.pow(fieldDependency['d'], 3))))
+        psi_bept = (9.81*ht_m) / Math.pow((fieldDependency['n_rps'] * fieldDependency['d']), 2)
+        y2_ns_rps = (fieldDependency['n_rps'] * Math.pow(qt_m3s, 0.5))/Math.pow(9.81*(fieldDependency['hb']), 0.75)
+        y2_ns_rad = 2*Math.PI*y2_ns_rps
+        applyChanges({"y2_q":y2_q, "y2_h":y2_h, "qt_m3s":qt_m3s, "qt_m3h":qt_m3h, "ht_m":ht_m, "fi_bept":fi_bept, "psi_bept":psi_bept, "y2_ns_rps":y2_ns_rps, "y2_ns_rad":y2_ns_rad})
     }
 }
 function generatePlot(dependency){
@@ -74,25 +88,25 @@ function generatePlot(dependency){
     var fi_t2psi_t = {
         x: fi_t,
         y: psi_t,
-        name: 'fi_t/psi_t',
+        name: 'fluxo/pressão',
         line: {shape: 'spline'},
     }
     var fi_t2eta_t = {
         x: fi_t,
         y: eta_t,
-        name: 'fi_t/eta_t',
+        name: 'fluxo/eficiencia',
         line: {shape: 'spline'},
     }
     var qtls2hm = {
         x: qt_ls,
         y: h_m,
-        name: 'qtls/hm',
+        name: 'vazão/altura',
         line: {shape: 'spline'},
     }
     var qtls2eta_t = {
         x: qt_ls,
         y: eta_t,
-        name: 'qtls/eta_t',
+        name: 'vazão/eficiencia',
         line: {shape: 'spline'},
     }
     

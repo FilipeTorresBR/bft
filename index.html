@@ -25,11 +25,11 @@
             </div>
             <div class="field">
                 <label for="qti">Qti (m³/s)</label>
-                <input type="text" id="qti" name="qti" value="0.0198">
+                <input type="text" id="qti" name="qti" onchange="autoCalculate('y1_nib', ['qti', 'hti', 'n_rpm'])" value="0.0198">
             </div>        
             <div class="field">
                 <label for="hti">Hti (m)</label>
-                <input type="text" id="hti" name="hti" value="39.89">
+                <input type="text" id="hti" name="hti" onchange="autoCalculate('y1_nib', ['qti', 'hti', 'n_rpm'])" value="39.89">
             </div>    
             <div class="field">
                 <label for="qb_m3s">Qb (m³/s)</label>
@@ -45,7 +45,7 @@
             </div>   
             <div class="field">
                 <label for="n_rpm">N (rpm)</label>
-                <input type="text" id="n_rpm" name="n_rpm" value="3500">
+                <input type="text" id="n_rpm" name="n_rpm" onchange="autoCalculate('y1_nib', ['qti', 'hti', 'n_rpm'])" value="3500">
             </div>     
             <div class="field">
                 <label for="n_rps">N (rps)</label>
@@ -53,15 +53,15 @@
             </div>     
             <div class="field">
                 <label for="d">D (m)</label>
-                <input type="text" id="d" name="d" value="0.123">
+                <input type="text" id="d" name="d" onchange="autoCalculate('y1_nib', ['qti', 'hti', 'n_rpm'])" value="0.123">
             </div>     
             <div class="field">
                 <label for="nb">ηb</label>
-                <input type="text" id="nb" name="nb" value="0.670">
+                <input type="text" id="nb" name="nb" onchange="autoCalculate('y1_nib', ['qti', 'hti', 'n_rpm'])" value="0.670">
             </div>  
             <div class="field">
                 <label for="p_kw">P (kW)</label>
-                <input type="text" id="p_kw" name="p_kw" value="16.50">
+                <input type="text" id="p_kw" name="p_kw" onchange="autoCalculate('y1_nib', ['qti', 'hti', 'n_rpm'])" value="16.50">
             </div> 
             <div class="field">
                 <label for="y1_ns_rps">Ns (rps)</label>
@@ -80,7 +80,7 @@
             </div>
             <div class="field">
                 <label for="y2_q">q</label>
-                <input type="text" id="y2_q" name="y2_q" readonly="true"">
+                <input type="text" id="y2_q" name="y2_q" readonly="true">
             </div>
             <div class="field">
                 <label for="y2_h">h</label>
@@ -117,16 +117,16 @@
         </div>
         <div>
             <input type="radio" id="tipo" name="tipo" value="fi_t2psi_t" required>
-            <label for="fi_t2psi_t">fi_t/psi_t</label>
+            <label for="fi_t2psi_t">Φ/Ψ</label>
         
             <input type="radio" id="tipo" name="tipo" value="fi_t2eta_t">
-            <label for="fi_t2eta_t">fi_t/eta_t</label>
+            <label for="fi_t2eta_t">Φ/η</label>
         
             <input type="radio" id="tipo" name="tipo" value="qtls2hm">
-            <label for="qtls2hm">qtls/hm</label>
+            <label for="qtls2hm">Qt(ls)/H(m)</label>
         
             <input type="radio" id="tipo" name="tipo" value="qtls2eta_t">
-            <label for="qtls2eta_t">qtls/eta_t</label>
+            <label for="qtls2eta_t">Qt(ls)/η</label>
         </div>
         <input type="button" value="Gerar Grafico" onclick="generatePlot(['psi_bept', 'fi_bept', 'n_rps', 'd', 'nb'])">
     </form>
