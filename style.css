@@ -49,7 +49,7 @@ form .model{
 }
 input[type="button"]{
     padding: 20px 35px;
-    margin-top: 10px;
+    margin: 10px;
     border-radius: 15px;
     font-size: medium;
     color: white;
@@ -59,6 +59,11 @@ input[type="button"]{
 input[type="button"]:hover{
     cursor: pointer;
 }
+input[type="radio"]{
+    width: 15px;
+    height: 15px;
+}
+
 footer{
     display: flex;
     align-items: center;

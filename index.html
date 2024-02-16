@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Calculo BFT</title>
     <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.plot.ly/plotly-2.29.1.min.js" charset="utf-8"></script>
 </head>
 <body>
     <form id="form">
@@ -114,8 +115,23 @@
                 <input type="text" id="y2_ns_rad" name="ns_rad" readonly="true">
             </div>
         </div>
+        <div>
+            <input type="radio" id="tipo" name="tipo" value="fi_t2psi_t" required>
+            <label for="fi_t2psi_t">fi_t/psi_t</label>
+        
+            <input type="radio" id="tipo" name="tipo" value="fi_t2eta_t">
+            <label for="fi_t2eta_t">fi_t/eta_t</label>
+        
+            <input type="radio" id="tipo" name="tipo" value="qtls2hm">
+            <label for="qtls2hm">qtls/hm</label>
+        
+            <input type="radio" id="tipo" name="tipo" value="qtls2eta_t">
+            <label for="qtls2eta_t">qtls/eta_t</label>
+        </div>
+        <input type="button" value="Gerar Grafico" onclick="generatePlot(['psi_bept', 'fi_bept', 'n_rps', 'd', 'nb'])">
     </form>
-    <input type="button" value="Gerar Grafico" onclick="generatePlot(['psi_bept', 'fi_bept', 'n_rps', 'd', 'nb'])">
+
+
     <div id="grafico"></div>
     <footer>
         <span>Desenvolvido por Filipe Torres</span>
@@ -126,6 +142,6 @@ window.onload = function() {
   start();
 };
 </script>
-<script src="eel.js"></script>
 <script src="script.js"></script>
+
 </html>
