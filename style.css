@@ -6,18 +6,17 @@ body{
     font-family: sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #b7e9f7;
+    background-image: linear-gradient(135deg, #8BC6EC 0%, #9599E2 100%);
 }
 form{
     width: 50%;
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-color: lightcyan;
+    background-color: #daeaf5;
     border-radius: 25px;
     margin: 25px;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
-
 }
 form .model{
     padding: 15px;
@@ -53,7 +52,7 @@ input[type="button"]{
     border-radius: 15px;
     font-size: medium;
     color: white;
-    background-color: rgb(51, 162, 255) !important;
+    background-color: #6e78ff !important;
     border: 0px solid black;
 }
 input[type="button"]:hover{
@@ -63,15 +62,27 @@ input[type="radio"]{
     width: 15px;
     height: 15px;
 }
-
+label{
+    font-size: 18px;
+}
 footer{
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 100px;
+    height: 50px;
     width: 100%;
+    background-color: #6e78ff !important;
+    margin-top: 15px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+}
+footer a{
     color: #fff;
     font-size: larger;
-    background-color: rgb(51, 162, 255) !important;
-    margin-top: 15px;
+    text-decoration: none;
+}
+@media (max-width: 600px) {
+    form{
+        width: 80%;
+    }
+
 }

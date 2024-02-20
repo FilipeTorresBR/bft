@@ -12,51 +12,51 @@
         <h1>Yang 1</h1>
         <div class="model" id="yang1">
             <div class="field">
-                <label for="y1_nib">ηib</label>
+                <label for="y1_nib">Eficiencia estimada (ηib)</label>
                 <input type="text" id="y1_nib" name="y1_nib" onchange="autoCalculate(this, ['qti', 'hti', 'n_rpm'])" value="0.7">
             </div>
             <div class="field">
-                <label for="y1_q">q</label>
+                <label for="y1_q">Coeficiente de vazão (q)</label>
                 <input type="text" id="y1_q" name="y1_q"  readonly="true">
             </div>
             <div class="field">
-                <label for="y1_h">h</label>
+                <label for="y1_h">Coeficiente de altura (h)</label>
                 <input type="text" id="y1_h" name="y1_h" readonly="true">
             </div>
             <div class="field">
-                <label for="qti">Qti (m³/s)</label>
+                <label for="qti">Fluxo da BFT em rotação constante Qti (m³/s)</label>
                 <input type="text" id="qti" name="qti" onchange="autoCalculate('y1_nib', ['qti', 'hti', 'n_rpm'])" value="0.0198">
             </div>        
             <div class="field">
-                <label for="hti">Hti (m)</label>
+                <label for="hti">Altura da BFT em rotação constante Hti (m)</label>
                 <input type="text" id="hti" name="hti" onchange="autoCalculate('y1_nib', ['qti', 'hti', 'n_rpm'])" value="39.89">
             </div>    
             <div class="field">
-                <label for="qb_m3s">Qb (m³/s)</label>
+                <label for="qb_m3s">Vazão da bomba no MPE Qb(m³/s)</label>
                 <input type="text" id="qb_m3s" name="qb_m3s" readonly="true">
             </div>    
             <div class="field">
-                <label for="qb_m3h">Qb (m³/h)</label>
+                <label for="qb_m3h">Vazão da bomba no MPE Qb(m³/h)</label>
                 <input type="text" id="qb_m3h" name="qb_m3h" readonly="true">
             </div>    
             <div class="field">
-                <label for="hb">Hb (m)</label>
+                <label for="hb">Pressão da bomba no MPE Hb(m)</label>
                 <input type="text" id="hb" name="hb" readonly="true">
             </div>   
             <div class="field">
-                <label for="n_rpm">N (rpm)</label>
+                <label for="n_rpm">Rotação da bomba N(rpm)</label>
                 <input type="text" id="n_rpm" name="n_rpm" onchange="autoCalculate('y1_nib', ['qti', 'hti', 'n_rpm'])" value="3500">
             </div>     
             <div class="field">
-                <label for="n_rps">N (rps)</label>
+                <label for="n_rps">Rotação da bomba N(rps)</label>
                 <input type="text" id="n_rps" name="n_rps" readonly="true">
             </div>     
             <div class="field">
-                <label for="d">D (m)</label>
+                <label for="d">Diamentro da bomba (m)</label>
                 <input type="text" id="d" name="d" onchange="autoCalculate('y1_nib', ['qti', 'hti', 'n_rpm'])" value="0.123">
             </div>     
             <div class="field">
-                <label for="nb">ηb</label>
+                <label for="nb">Eficiencia real</label>
                 <input type="text" id="nb" name="nb" onchange="autoCalculate('y1_nib', ['qti', 'hti', 'n_rpm'])" value="0.670">
             </div>  
             <div class="field">
@@ -64,54 +64,54 @@
                 <input type="text" id="p_kw" name="p_kw" onchange="autoCalculate('y1_nib', ['qti', 'hti', 'n_rpm'])" value="16.50">
             </div> 
             <div class="field">
-                <label for="y1_ns_rps">Ns (rps)</label>
+                <label for="y1_ns_rps">Velocidade específica N(rps)</label>
                 <input type="text" id="y1_ns_rps" name="y1_ns_rps" readonly="true">
             </div>  
             <div class="field">
-                <label for="y1_ns_rad">Ns (rad/s)</label>
+                <label for="y1_ns_rad">Velocidade específica Ns(rad/s)</label>
                 <input type="text" id="y1_ns_rad" name="y1_ns_rad" readonly="true">
             </div>  
         </div>
         <h1>Yang 2</h1>
         <div class="model" id="yang2">
             <div class="field">
-                <label for="y2_nb">ηb</label>
+                <label for="y2_nb">Eficienciencia real (ηb)</label>
                 <input type="text" id="y2_nb" name="y2_nb" onchange="autoCalculate(this, ['qb_m3s', 'hb', 'n_rps', 'd'])" value="0.67">
             </div>
             <div class="field">
-                <label for="y2_q">q</label>
+                <label for="y2_q">Coeficiente de vazão (q)</label>
                 <input type="text" id="y2_q" name="y2_q" readonly="true">
             </div>
             <div class="field">
-                <label for="y2_h">h</label>
+                <label for="y2_h">Coeficiente de altura (h)</label>
                 <input type="text" id="y2_h" name="y2_h" readonly="true">
             </div>
             <div class="field">
-                <label for="qt_m3s">Qt (m³/s)</label>
+                <label for="qt_m3s">Vazão da turbina Qt(m³/s)</label>
                 <input type="text" id="qt_m3s" name="qt_m3s" readonly="true">
             </div>
             <div class="field">
-                <label for="qt_m3h">Qt (m³/h)</label>
+                <label for="qt_m3h">Vazão da turbina Qt(m³/h)</label>
                 <input type="text" id="qt_m3h" name="qt_m3h" readonly="true">
             </div>
             <div class="field">
-                <label for="ht_m">Ht (m)</label>
+                <label for="ht_m">Pressão da turbina Ht(m)</label>
                 <input type="text" id="ht_m" name="ht_m" readonly="true">
             </div>
             <div class="field">
-                <label for="fi_bept">φ BEPt</label>
+                <label for="fi_bept">Coeficiente de vazão da turbina (φBEP)</label>
                 <input type="text" id="fi_bept" name="fi_bept" readonly="true">
             </div>
             <div class="field">
-                <label for="psi_bept">ψ BEPt</label>
+                <label for="psi_bept">Coeficiente de pressão da turbina (ψBEP)</label>
                 <input type="text" id="psi_bept" name="psi_bept" readonly="true">
             </div>
             <div class="field">
-                <label for="y2_ns_rps">Ns (rps)</label>
+                <label for="y2_ns_rps">Velocidade específica N(rps)</label>
                 <input type="text" id="y2_ns_rps" name="y2_ns_rps" readonly="true">
             </div>
             <div class="field">
-                <label for="y2_ns_rad">Ns (rad/s)</label>
+                <label for="y2_ns_rad">Velocidade específica Ns(rad/s)</label>
                 <input type="text" id="y2_ns_rad" name="ns_rad" readonly="true">
             </div>
         </div>
@@ -131,10 +131,9 @@
         <input type="button" value="Gerar Grafico" onclick="generatePlot(['psi_bept', 'fi_bept', 'n_rps', 'd', 'nb'])">
     </form>
 
-
     <div id="grafico"></div>
     <footer>
-        <span>Desenvolvido por Filipe Torres</span>
+        <a href="https://github.com/filipetorresbr"><span>Desenvolvido por Filipe Torres</span></a>
     </footer>
 </body>
 <script>
