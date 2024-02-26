@@ -1,6 +1,6 @@
 function applyChanges(affectedsRows){
     for (const [key, value] of Object.entries(affectedsRows)) {
-        document.getElementById(`${key}`).value=`${value}`
+        document.getElementById(`${key}`).value=`${value.toFixed(3)}`
       }
 }
 function getDependency(dependency){
@@ -8,10 +8,12 @@ function getDependency(dependency){
     let dependencyName;
     let dependencyValue;
     for(let x = 0; x<dependency.length; x++){
-        dependencyName = document.getElementById(dependency[x]).name
+        /*dependencyName = document.getElementById(dependency[x]).name*/
         dependencyValue = document.getElementById(dependency[x]).value
+        console.log(dependency[x], dependencyValue[x])
         dependencyObject[dependency[x]] = parseFloat(dependencyValue);
     }
+    console.log('------')
     return dependencyObject;
 }
 function autoCalculate(field, dependency) {
@@ -61,6 +63,7 @@ function autoCalculate(field, dependency) {
     }
 }
 function generatePlot(dependency){
+    console.log(dependency)
     dependency = getDependency(dependency)
     fi_t = []
     psi_t = []
@@ -68,7 +71,7 @@ function generatePlot(dependency){
     qt_ls = []
     h_m = []
     fi_t.push(dependency['fi_bept'])
-    
+
     for(x=1;x<40;x++){
         fi_t.unshift(fi_t[x - 1] - (0.003 * x))
     }
@@ -79,68 +82,97 @@ function generatePlot(dependency){
 
     for (x = 0; x<fi_t.length; x++){
         psi_t.push(dependency['psi_bept']*(0.2394*Math.pow(fi_t[x]/dependency['fi_bept'], 2) + 0.769*(fi_t[x]/dependency['fi_bept'])))
-        eta_t.push(((-1.9788*(Math.pow(fi_t[x]/dependency['fi_bept'], 6)))+(9.0636*(Math.pow(fi_t[x]/dependency['fi_bept'], 5)))-(13.148*(Math.pow(fi_t[x]/dependency['fi_bept'], 4)))+(3.8527*(Math.pow(fi_t[x]/dependency['fi_bept'], 3)))+(4.5614*(Math.pow(fi_t[x]/dependency['fi_bept'], 2)))-(1.3769*((fi_t[x]/dependency['fi_bept']))))*(dependency['nb']))
+        eta_t.push(((-1.9788*(Math.pow(fi_t[x]/dependency['fi_bept'], 6)))+(9.0636*(Math.pow(fi_t[x]/dependency['fi_bept'], 5)))-(13.148*(Math.pow(fi_t[x]/dependency['fi_bept'], 4)))+(3.8527*(Math.pow(fi_t[x]/dependency['fi_bept'], 3)))+(4.5614*(Math.pow(fi_t[x]/dependency['fi_bept'], 2)))-(1.3769*((fi_t[x]/dependency['fi_bept']))))*(dependency['y2_nb']))
         qt_ls.push((((fi_t[x])*((dependency['n_rps'])*(Math.pow(dependency['d'], 3))))*1000)/3.6)
         h_m.push((psi_t[x]* Math.pow(dependency['n_rps'] * dependency['d'], 2)) / 9.81)
     }
-    console.log(h_m)
     
-    var fi_t2psi_t = {
+    let fi_t_psi_t = {
         x: fi_t,
         y: psi_t,
         name: 'fluxo/pressão',
         line: {shape: 'spline'},
     }
-    var fi_t2eta_t = {
+    let eixos_fi_t_psi_t = {
+        title: 'Relação do fluxo pela pressão',
+        xaxis: {
+          title: 'Φ'
+        },
+        yaxis: {
+          title: 'Ψ'
+        }
+    }
+
+    let fi_t_eta_t = {
         x: fi_t,
         y: eta_t,
         name: 'fluxo/eficiencia',
         line: {shape: 'spline'},
     }
-    var qtls2hm = {
+    let eixos_fi_t_eta_t = {
+        title: 'Relação do fluxo pela eficiencia',
+        xaxis: {
+          title: 'Φ'
+        },
+        yaxis: {
+          title: 'η'
+        }
+    }
+
+    let qtls_hm = {
         x: qt_ls,
         y: h_m,
         name: 'vazão/altura',
         line: {shape: 'spline'},
     }
-    var qtls2eta_t = {
+    let eixos_qtls_hm = {
+        title: 'Relação da vazão pela altura',
+        xaxis: {
+          title: 'Qt [ls]',
+          range: [0, qt_ls.max]
+        },
+        yaxis: {
+          title: 'H [m]',
+        }
+    }
+
+    let qtls_eta_t = {
         x: qt_ls,
         y: eta_t,
         name: 'vazão/eficiencia',
         line: {shape: 'spline'},
     }
-    
+    let eixos_qtls_eta_t = {
+        title: 'Relação da vazão pela eficiencia',
+        xaxis: {
+          title: 'Qt [ls]'
+        },
+        yaxis: {
+          title: 'η'
+        }
+    }
     tipo = document.querySelector('input[name="tipo"]:checked').value;
 
     switch(tipo){
-        case "fi_t2psi_t":
-            data = [fi_t2psi_t]
+        case "fi_t_psi_t":
+            data = [fi_t_psi_t]
+            layout = eixos_fi_t_psi_t 
             break
-        case "fi_t2eta_t":
-            data = [fi_t2eta_t]
+        case "fi_t_eta_t":
+            data = [fi_t_eta_t]
+            layout = eixos_fi_t_eta_t 
             break
-        case "qtls2hm":
-            data = [qtls2hm]
+        case "qtls_hm":
+            data = [qtls_hm]
+            layout = eixos_qtls_hm
             break
-        case "qtls2eta_t":
-            data = [qtls2eta_t]
+        case "qtls_eta_t":
+            data = [qtls_eta_t]
+            layout = eixos_qtls_eta_t
             break
     }
 
-    Plotly.newPlot('grafico', data)
-    /*
-    axis[0, 0].plot(fi_t, psi_t)
-    axis[0, 0].set_title("fi/psi") 
-
-    axis[0, 1].plot(fi_t, eta_t)
-    axis[0, 1].set_title("fi/eta") 
-
-    axis[1, 0].plot(qt_ls, h_m)
-    axis[1, 0].set_title("qt/h") 
-
-    axis[1, 1].plot(qt_ls, eta_t)
-    axis[1, 1].set_title("qt/eta") 
-*/
+    Plotly.newPlot('grafico', data, layout)
 }
 function start(){
     autoCalculate(document.getElementById('y1_nib'), ['qti', 'hti', 'n_rpm'])

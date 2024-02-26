@@ -9,7 +9,22 @@
 </head>
 <body>
     <form id="form">
-        <h1>Yang 1</h1>
+        <h2>Aproveitamento</h2>
+        <div class="model" id="aproveitamento">
+            <div class="field">
+                <label for="qti">Fluxo da BFT em rotação constante Qti (m³/s)</label>
+                <input type="text" id="qti" name="qti" onchange="autoCalculate('y1_nib', ['qti', 'hti', 'n_rpm'])" value="0.0198">
+            </div>
+            <div class="field">
+                <label for="qtia_convertido">Qti convertido</label>
+                <input type="text" id="qtia_convertido" name="qtia_convertido" value="0">
+            </div>            
+            <div class="field">
+                <label for="hti">Altura da BFT em rotação constante Hti (m)</label>
+                <input type="text" id="hti" name="hti" onchange="autoCalculate('y1_nib', ['qti', 'hti', 'n_rpm'])" value="39.89">
+            </div>    
+        </div>
+        <h2>Yang</h2>
         <div class="model" id="yang1">
             <div class="field">
                 <label for="y1_nib">Eficiencia estimada (ηib)</label>
@@ -23,14 +38,6 @@
                 <label for="y1_h">Coeficiente de altura (h)</label>
                 <input type="text" id="y1_h" name="y1_h" readonly="true">
             </div>
-            <div class="field">
-                <label for="qti">Fluxo da BFT em rotação constante Qti (m³/s)</label>
-                <input type="text" id="qti" name="qti" onchange="autoCalculate('y1_nib', ['qti', 'hti', 'n_rpm'])" value="0.0198">
-            </div>        
-            <div class="field">
-                <label for="hti">Altura da BFT em rotação constante Hti (m)</label>
-                <input type="text" id="hti" name="hti" onchange="autoCalculate('y1_nib', ['qti', 'hti', 'n_rpm'])" value="39.89">
-            </div>    
             <div class="field">
                 <label for="qb_m3s">Vazão da bomba no MPE Qb(m³/s)</label>
                 <input type="text" id="qb_m3s" name="qb_m3s" readonly="true">
@@ -56,10 +63,6 @@
                 <input type="text" id="d" name="d" onchange="autoCalculate('y1_nib', ['qti', 'hti', 'n_rpm'])" value="0.123">
             </div>     
             <div class="field">
-                <label for="nb">Eficiencia real</label>
-                <input type="text" id="nb" name="nb" onchange="autoCalculate('y1_nib', ['qti', 'hti', 'n_rpm'])" value="0.670">
-            </div>  
-            <div class="field">
                 <label for="p_kw">P (kW)</label>
                 <input type="text" id="p_kw" name="p_kw" onchange="autoCalculate('y1_nib', ['qti', 'hti', 'n_rpm'])" value="16.50">
             </div> 
@@ -72,7 +75,6 @@
                 <input type="text" id="y1_ns_rad" name="y1_ns_rad" readonly="true">
             </div>  
         </div>
-        <h1>Yang 2</h1>
         <div class="model" id="yang2">
             <div class="field">
                 <label for="y2_nb">Eficienciencia real (ηb)</label>
@@ -116,19 +118,19 @@
             </div>
         </div>
         <div>
-            <input type="radio" id="tipo" name="tipo" value="fi_t2psi_t" required>
-            <label for="fi_t2psi_t">Φ/Ψ</label>
+            <input type="radio" id="tipo" name="tipo" value="fi_t_psi_t" required>
+            <label for="fi_t_psi_t">Φ/Ψ</label>
         
-            <input type="radio" id="tipo" name="tipo" value="fi_t2eta_t">
-            <label for="fi_t2eta_t">Φ/η</label>
+            <input type="radio" id="tipo" name="tipo" value="fi_t_eta_t">
+            <label for="fi_t_eta_t">Φ/η</label>
         
-            <input type="radio" id="tipo" name="tipo" value="qtls2hm">
-            <label for="qtls2hm">Qt(ls)/H(m)</label>
+            <input type="radio" id="tipo" name="tipo" value="qtls_hm">
+            <label for="qtls_hm">Qt(ls)/H(m)</label>
         
-            <input type="radio" id="tipo" name="tipo" value="qtls2eta_t">
-            <label for="qtls2eta_t">Qt(ls)/η</label>
+            <input type="radio" id="tipo" name="tipo" value="qtls_eta_t">
+            <label for="qtls_eta_t">Qt(ls)/η</label>
         </div>
-        <input type="button" value="Gerar Grafico" onclick="generatePlot(['psi_bept', 'fi_bept', 'n_rps', 'd', 'nb'])">
+        <input type="button" value="Gerar Grafico" onclick="generatePlot(['psi_bept', 'fi_bept', 'n_rps', 'd', 'y2_nb'])">
     </form>
 
     <div id="grafico"></div>
