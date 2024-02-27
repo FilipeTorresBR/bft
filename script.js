@@ -13,57 +13,71 @@ function getDependency(dependency){
         console.log(dependency[x], dependencyValue[x])
         dependencyObject[dependency[x]] = parseFloat(dependencyValue);
     }
-    console.log('------')
     return dependencyObject;
+}
+function analiseModelo(dependency){
+    dependencies = getDependency(dependency)
+    let aviso_span = document.getElementById("aviso");
+    let aviso_campo = document.getElementById("aviso-campo");
+    if(dependencies['qb_m3s'] < dependencies['qt_m3s']){
+        aviso_span.innerHTML = "O valor da turbina é maior que o da bomba"
+        aviso_campo.classList.add("success");
+        for(let x = 0; x<dependency.length; x++){document.getElementById(dependency[x]).classList.add("success")}
+    }else{
+        aviso_span.innerHTML = "O valor da turbina é menor que o da bomba"
+        aviso_campo.classList.add("fail");
+        for(let x = 0; x<dependency.length; x++){document.getElementById(dependency[x]).classList.add("fail")}
+
+    }
 }
 function autoCalculate(field, dependency) {
     if (typeof field == "string") {field = document.getElementById('y1_nib')}
     var inputValue = parseFloat(field.value);
     var inputName = field.name;
-    var fieldDependency = getDependency(dependency)
+    var dependency = getDependency(dependency)
 
     if (inputName == "y1_nib"){
         y1_q = ((1.2)/Math.pow(inputValue, 0.55))
         y1_h = ((1.2)/Math.pow(inputValue, 1.1))
-        qb_m3s = fieldDependency['qti'] / y1_q
+        qb_m3s = dependency['qti'] / y1_q
         qb_m3h = qb_m3s * 3600
-        hb = fieldDependency['hti'] / y1_h
-        n_rps = fieldDependency['n_rpm'] / 60
+        hb = dependency['hti'] / y1_h
+        n_rps = dependency['n_rpm'] / 60
         y1_ns_rps = (n_rps * Math.pow(qb_m3s, 0.5))/Math.pow((9.81*hb), 0.75)
         y1_ns_rad = 2*Math.PI*y1_ns_rps
-        applyChanges({"y1_q":y1_q, "y1_h":y1_h, "qb_m3s":qb_m3s, "qb_m3h":qb_m3h, "hb":hb, "n_rps":n_rps, "y1_ns_rps":y1_ns_rps, "y1_ns_rad":y1_ns_rad})
+        qti_convertido = 3600 * dependency['qti']
+        applyChanges({"y1_q":y1_q, "y1_h":y1_h, "qb_m3s":qb_m3s, "qb_m3h":qb_m3h, "hb":hb, "n_rps":n_rps, "y1_ns_rps":y1_ns_rps, "y1_ns_rad":y1_ns_rad, "qti_convertido":qti_convertido})
 
 
         field = document.getElementById('y2_nb')
         var inputValue = parseFloat(field.value);
-        var fieldDependency = getDependency(['qb_m3s', 'hb', 'n_rps', 'd'])
+        var dependency = getDependency(['qb_m3s', 'hb', 'n_rps', 'd'])
 
         y2_q = ((1.2)/Math.pow(inputValue, 0.55))
         y2_h = ((1.2)/Math.pow(inputValue, 1.1))
-        qt_m3s = fieldDependency['qb_m3s'] * y2_q
+        qt_m3s = dependency['qb_m3s'] * y2_q
         qt_m3h = qt_m3s * 3600
-        ht_m = fieldDependency['hb'] * y2_h
-        fi_bept = ((qt_m3s) / ((fieldDependency['n_rps']) * (Math.pow(fieldDependency['d'], 3))))
-        psi_bept = (9.81*ht_m) / Math.pow((fieldDependency['n_rps'] * fieldDependency['d']), 2)
-        y2_ns_rps = (fieldDependency['n_rps'] * Math.pow(qt_m3s, 0.5))/Math.pow(9.81*(fieldDependency['hb']), 0.75)
+        ht_m = dependency['hb'] * y2_h
+        fi_bept = ((qt_m3s) / ((dependency['n_rps']) * (Math.pow(dependency['d'], 3))))
+        psi_bept = (9.81*ht_m) / Math.pow((dependency['n_rps'] * dependency['d']), 2)
+        y2_ns_rps = (dependency['n_rps'] * Math.pow(qt_m3s, 0.5))/Math.pow(9.81*(dependency['hb']), 0.75)
         y2_ns_rad = 2*Math.PI*y2_ns_rps
         applyChanges({"y2_q":y2_q, "y2_h":y2_h, "qt_m3s":qt_m3s, "qt_m3h":qt_m3h, "ht_m":ht_m, "fi_bept":fi_bept, "psi_bept":psi_bept, "y2_ns_rps":y2_ns_rps, "y2_ns_rad":y2_ns_rad})
     }
     if (inputName == "y2_nb"){
         y2_q = ((1.2)/Math.pow(inputValue, 0.55))
         y2_h = ((1.2)/Math.pow(inputValue, 1.1))
-        qt_m3s = fieldDependency['qb_m3s'] * y2_q
+        qt_m3s = dependency['qb_m3s'] * y2_q
         qt_m3h = qt_m3s * 3600
-        ht_m = fieldDependency['hb'] * y2_h
-        fi_bept = ((qt_m3s) / ((fieldDependency['n_rps']) * (Math.pow(fieldDependency['d'], 3))))
-        psi_bept = (9.81*ht_m) / Math.pow((fieldDependency['n_rps'] * fieldDependency['d']), 2)
-        y2_ns_rps = (fieldDependency['n_rps'] * Math.pow(qt_m3s, 0.5))/Math.pow(9.81*(fieldDependency['hb']), 0.75)
+        ht_m = dependency['hb'] * y2_h
+        fi_bept = ((qt_m3s) / ((dependency['n_rps']) * (Math.pow(dependency['d'], 3))))
+        psi_bept = (9.81*ht_m) / Math.pow((dependency['n_rps'] * dependency['d']), 2)
+        y2_ns_rps = (dependency['n_rps'] * Math.pow(qt_m3s, 0.5))/Math.pow(9.81*(dependency['hb']), 0.75)
         y2_ns_rad = 2*Math.PI*y2_ns_rps
         applyChanges({"y2_q":y2_q, "y2_h":y2_h, "qt_m3s":qt_m3s, "qt_m3h":qt_m3h, "ht_m":ht_m, "fi_bept":fi_bept, "psi_bept":psi_bept, "y2_ns_rps":y2_ns_rps, "y2_ns_rad":y2_ns_rad})
     }
 }
 function generatePlot(dependency){
-    console.log(dependency)
     dependency = getDependency(dependency)
     fi_t = []
     psi_t = []
@@ -171,7 +185,7 @@ function generatePlot(dependency){
             layout = eixos_qtls_eta_t
             break
     }
-
+        analiseModelo(['qb_m3s', 'qb_m3h', 'qt_m3s', 'qt_m3h'])
     Plotly.newPlot('grafico', data, layout)
 }
 function start(){

@@ -65,6 +65,7 @@ input[type="radio"]{
 label{
     font-size: 18px;
 }
+
 footer{
     display: flex;
     align-items: center;
@@ -79,6 +80,31 @@ footer a{
     color: #fff;
     font-size: larger;
     text-decoration: none;
+}
+#aviso-campo{
+    margin: 15px;
+}
+.success{
+    background-color: rgb(205, 255, 205) !important;
+    color: rgb(1, 27, 1);
+    font-size: 18px;
+    padding: 10px 20px;
+    border-radius: 15px;
+}
+.success input[type="text"]{
+    background-color: rgb(205, 255, 205) !important;
+    color:#1b0101;
+}
+.fail{
+    background-color: rgb(247, 189, 189) !important;
+    color:rgb(59, 0, 0);
+    font-size: 18px;
+    padding: 10px 20px;
+    border-radius: 15px;
+}
+.fail input[type="text"]{
+    background-color: rgb(247, 189, 189) !important;
+    color: rgb(59, 0, 0);
 }
 @media (max-width: 600px) {
     form{
