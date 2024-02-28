@@ -27,39 +27,125 @@
         <h2>Yang</h2>
         <div class="model" id="yang1">
             <div class="field">
-                <label for="y1_nib">Eficiencia estimada (ηib)</label>
-                <input type="text" id="y1_nib" name="y1_nib" onchange="autoCalculate(this, ['qti', 'hti', 'n_rpm'])" value="0.7">
+                <label for="y1_nib">Eficiencia estimada (ηib) 
+                    <div class="icon-container">
+                        <div class="icon"></div>
+                        <div class="tooltip">Valor de eficiencia estimada da bomba. Entre 0 e 1</div>
+                    </div>
+                </label>
+                <input type="text" id="y1_nib" name="y1_nib" onchange="autoCalculate(this, ['qti', 'hti', 'n_rpm'])" value="0.7" min="0" max="1">
             </div>
             <div class="field">
-                <label for="y1_q">Coeficiente de vazão - (q)</label>
-                <input type="text" id="y1_q" name="y1_q"  readonly="true">
+                <label for="y1_q">Coeficiente de vazão - (q)
+                    <div class="icon-container">
+                        <div class="icon"></div>
+                        <div class="tooltip">Definido por: 
+                            <math>
+                                <mfrac>
+                                    <mn>1.2</mn>
+                                    <mn>ηib⁰·⁵⁵</mn>
+                                </mfrac>
+                            </math>
+                        </div>
+                    </div>
+                </label>
+                <input type="text" id="y1_q" name="y1_q" readonly="true">
             </div>
             <div class="field">
-                <label for="y1_h">Coeficiente de altura - (h)</label>
+                <label for="y1_h">Coeficiente de altura - (h)
+                    <div class="icon-container">
+                        <div class="icon"></div>
+                        <div class="tooltip">Definido por: 
+                            <math>
+                                <mfrac>
+                                    <mn>1.2</mn>
+                                    <mn>ηib¹·¹</mn>
+                                </mfrac>
+                            </math>
+                        </div>
+                    </div>
+                </label>
                 <input type="text" id="y1_h" name="y1_h" readonly="true">
             </div>
             <div class="field">
-                <label for="qb_m3s">Fluxo da bomba - Qb(m³/s)</label>
+                <label for="qb_m3s">Fluxo da bomba - Qb(m³/s)
+                    <div class="icon-container">
+                        <div class="icon"></div>
+                        <div class="tooltip">Definido por: 
+                            <math>
+                                <mfrac>
+                                    <mn>Qti (m³/s)</mn>
+                                    <mn>q</mn>
+                                </mfrac>
+                            </math>
+                        </div>
+                    </div>
+                </label>
                 <input type="text" id="qb_m3s" name="qb_m3s" readonly="true">
             </div>    
             <div class="field">
-                <label for="qb_m3h">Fluxo da bomba - Qb(m³/h)</label>
+                <label for="qb_m3h">Fluxo da bomba - Qb(m³/h)
+                    <div class="icon-container">
+                        <div class="icon"></div>
+                        <div class="tooltip">Definido por: 
+                            <math>
+                                <mfrac>
+                                    <mn>Qti (m³/s) &times 3600</mn>
+                                </mfrac>
+                            </math>
+                        </div>
+                    </div>
+                </label>
                 <input type="text" id="qb_m3h" name="qb_m3h" readonly="true">
             </div>    
             <div class="field">
-                <label for="hb">Altura da bomba - Hb(m)</label>
+                <label for="hb">Altura da bomba - Hb(m)
+                    <div class="icon-container">
+                        <div class="icon"></div>
+                        <div class="tooltip">Definido por: 
+                            <math>
+                                <mfrac>
+                                    <mn>Hti (m)</mn>
+                                    <mn>h</mn>
+                                </mfrac>
+                            </math>
+                        </div>
+                    </div>
+                </label>
                 <input type="text" id="hb" name="hb" readonly="true">
             </div>   
             <div class="field">
-                <label for="n_rpm">Rotação da bomba - N(rpm)</label>
+                <label for="n_rpm">Rotação da bomba - N(rpm)
+                    <div class="icon-container">
+                        <div class="icon"></div>
+                        <div class="tooltip">Fornecido pelo fabricante da bomba</div>
+                    </div>
+                </label>
                 <input type="text" id="n_rpm" name="n_rpm" onchange="autoCalculate('y1_nib', ['qti', 'hti', 'n_rpm'])" value="3500">
             </div>     
             <div class="field">
-                <label for="n_rps">Rotação da bomba - N(rps)</label>
+                <label for="n_rps">Rotação da bomba - N(rps)
+                    <div class="icon-container">
+                        <div class="icon"></div>
+                        <div class="tooltip">Definido por: 
+                            <math>
+                                <mfrac>
+                                    <mn>N (rpm)</mn>
+                                    <mn>60</mn>
+                                </mfrac>
+                            </math>
+                        </div>
+                    </div>
+                </label>
                 <input type="text" id="n_rps" name="n_rps" readonly="true">
             </div>     
             <div class="field">
-                <label for="d">Diamentro da bomba - D(m)</label>
+                <label for="d">Diamentro da bomba - D(m)
+                    <div class="icon-container">
+                        <div class="icon"></div>
+                        <div class="tooltip">Fornecido pelo fabricante da bomba</div>
+                    </div>
+                </label>
                 <input type="text" id="d" name="d" onchange="autoCalculate('y1_nib', ['qti', 'hti', 'n_rpm'])" value="0.123">
             </div>     
             <div class="field">
@@ -67,11 +153,34 @@
                 <input type="text" id="p_kw" name="p_kw" onchange="autoCalculate('y1_nib', ['qti', 'hti', 'n_rpm'])" value="16.50">
             </div> 
             <div class="field">
-                <label for="y1_ns_rps">Velocidade específica - N(rps)</label>
+                <label for="y1_ns_rps">Velocidade específica - Ns(rps)
+                    <div class="icon-container">
+                        <div class="icon"></div>
+                        <div class="tooltip">Definido por: 
+                            <math>
+                                <mfrac>
+                                    <mn>N (rps) &times Qb (m³/s)⁰·⁵</mn>
+                                    <mn>(9.81 &times Hb (m))⁰·⁷⁵</mn>
+                                </mfrac>
+                            </math>
+                        </div>
+                    </div>
+                </label>
                 <input type="text" id="y1_ns_rps" name="y1_ns_rps" readonly="true">
             </div>  
             <div class="field">
-                <label for="y1_ns_rad">Velocidade específica - Ns(rad/s)</label>
+                <label for="y1_ns_rad">Velocidade específica - Ns(rad/s)
+                    <div class="icon-container">
+                        <div class="icon"></div>
+                        <div class="tooltip">Definido por: 
+                            <math>
+                                <mfrac>
+                                    <mn>2 &times &pi; &times Ns (rps)</mn>
+                                </mfrac>
+                            </math>
+                        </div>
+                    </div>
+                </label>
                 <input type="text" id="y1_ns_rad" name="y1_ns_rad" readonly="true">
             </div>  
         </div>
