@@ -101,92 +101,111 @@ function generatePlot(dependency){
         h_m.push((psi_t[x]* Math.pow(dependency['n_rps'] * dependency['d'], 2)) / 9.81)
     }
     
-    let fi_t_psi_t = {
+    let data_fi_t_psi_t = {
         x: fi_t,
         y: psi_t,
         name: 'fluxo/pressão',
         line: {shape: 'spline'},
     }
-    let eixos_fi_t_psi_t = {
+    let layout_fi_t_psi_t = {
         title: 'Relação do fluxo pela pressão',
         xaxis: {
-          title: 'Φ'
+            title: 'Φ',
+            showgrid: false,
+            showline: true,
         },
         yaxis: {
-          title: 'Ψ'
+            title: 'Ψ',
+            showgrid: false,
+            showline: true,
         }
     }
 
-    let fi_t_eta_t = {
+    let data_fi_t_eta_t = {
         x: fi_t,
         y: eta_t,
         name: 'fluxo/eficiencia',
         line: {shape: 'spline'},
     }
-    let eixos_fi_t_eta_t = {
+    let layout_fi_t_eta_t = {
         title: 'Relação do fluxo pela eficiencia',
         xaxis: {
-          title: 'Φ'
+            title: 'Φ',
+            showgrid: false,
+            showline: true,
         },
         yaxis: {
-          title: 'η'
+            title: 'η',
+            showgrid: false,
+            showline: true,
+            range: [0.1, 0.8]
         }
     }
 
-    let qtls_hm = {
+    let data_qtls_hm = {
         x: qt_ls,
         y: h_m,
         name: 'vazão/altura',
         line: {shape: 'spline'},
     }
-    let eixos_qtls_hm = {
+    let layout_qtls_hm = {
         title: 'Relação da vazão pela altura',
         xaxis: {
-          title: 'Qt [ls]',
-          range: [0, qt_ls.max]
+            title: 'Qt [ls]',
+            showgrid: false,
+            showline: true,
         },
         yaxis: {
-          title: 'H [m]',
+            title: 'H [m]',
+            showgrid: false,
+            showline: true,
         }
     }
 
-    let qtls_eta_t = {
+    let data_qtls_eta_t = {
         x: qt_ls,
         y: eta_t,
         name: 'vazão/eficiencia',
         line: {shape: 'spline'},
     }
-    let eixos_qtls_eta_t = {
+
+    let layout_qtls_eta_t = {
         title: 'Relação da vazão pela eficiencia',
         xaxis: {
-          title: 'Qt [ls]'
+            title: 'Qt [ls]',
+            showgrid: false,
+            showline: true,
+
         },
         yaxis: {
-          title: 'η'
+            title: 'η',
+            showgrid: false,
+            showline: true,
+            range: [0.1, 0.8]
         }
     }
     tipo = document.querySelector('input[name="tipo"]:checked').value;
 
     switch(tipo){
         case "fi_t_psi_t":
-            data = [fi_t_psi_t]
-            layout = eixos_fi_t_psi_t 
+            data = [data_fi_t_psi_t]
+            layout = layout_fi_t_psi_t 
             break
         case "fi_t_eta_t":
-            data = [fi_t_eta_t]
-            layout = eixos_fi_t_eta_t 
+            data = [data_fi_t_eta_t]
+            layout = layout_fi_t_eta_t 
             break
         case "qtls_hm":
-            data = [qtls_hm]
-            layout = eixos_qtls_hm
+            data = [data_qtls_hm]
+            layout = layout_qtls_hm
             break
         case "qtls_eta_t":
-            data = [qtls_eta_t]
-            layout = eixos_qtls_eta_t
+            data = [data_qtls_eta_t]
+            layout = layout_qtls_eta_t
             break
     }
-        analiseModelo(['qb_m3s', 'qb_m3h', 'qt_m3s', 'qt_m3h'])
-    Plotly.newPlot('grafico', data, layout)
+    analiseModelo(['qb_m3s', 'qb_m3h', 'qt_m3s', 'qt_m3h'])
+    Plotly.newPlot('grafico', data, layout, {responsive: true})
 }
 function start(){
     autoCalculate(document.getElementById('y1_nib'), ['qti', 'hti', 'n_rpm'])

@@ -110,5 +110,7 @@ footer a{
     form{
         width: 80%;
     }
-
+    #grafico{
+        width: 80%;
+    }
 }
