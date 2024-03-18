@@ -19,12 +19,12 @@ function analiseModelo(dependency){
     dependencies = getDependency(dependency)
     let aviso_span = document.getElementById("aviso");
     let aviso_campo = document.getElementById("aviso-campo");
-    if(dependencies['qb_m3s'] < dependencies['qt_m3s']){
-        aviso_span.innerHTML = "O valor da turbina é maior que o da bomba"
+    if(dependencies['qti'] <= dependencies['qt_m3s']){
+        aviso_span.innerHTML = "O dados da BFT são maiores que o da VCP"
         aviso_campo.classList.add("success");
         for(let x = 0; x<dependency.length; x++){document.getElementById(dependency[x]).classList.add("success")}
     }else{
-        aviso_span.innerHTML = "O valor da turbina é menor que o da bomba"
+        aviso_span.innerHTML = "O dados da BFT são menores que o da VCP"
         aviso_campo.classList.add("fail");
         for(let x = 0; x<dependency.length; x++){document.getElementById(dependency[x]).classList.add("fail")}
 
@@ -204,7 +204,7 @@ function generatePlot(dependency){
             layout = layout_qtls_eta_t
             break
     }
-    analiseModelo(['qb_m3s', 'qb_m3h', 'qt_m3s', 'qt_m3h'])
+    analiseModelo(['qti', 'hti', 'qt_m3s', 'ht_m'])
     Plotly.newPlot('grafico', data, layout, {responsive: true})
 }
 function start(){
