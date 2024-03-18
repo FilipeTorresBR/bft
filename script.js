@@ -10,7 +10,6 @@ function getDependency(dependency){
     for(let x = 0; x<dependency.length; x++){
         /*dependencyName = document.getElementById(dependency[x]).name*/
         dependencyValue = document.getElementById(dependency[x]).value
-        console.log(dependency[x], dependencyValue[x])
         dependencyObject[dependency[x]] = parseFloat(dependencyValue);
     }
     return dependencyObject;
@@ -107,59 +106,18 @@ function generatePlot(dependency){
         name: 'fluxo/pressão',
         line: {shape: 'spline'},
     }
-    let layout_fi_t_psi_t = {
-        title: 'Relação do fluxo pela pressão',
-        xaxis: {
-            title: 'Φ',
-            showgrid: false,
-            showline: true,
-        },
-        yaxis: {
-            title: 'Ψ',
-            showgrid: false,
-            showline: true,
-        }
-    }
-
     let data_fi_t_eta_t = {
         x: fi_t,
         y: eta_t,
         name: 'fluxo/eficiencia',
         line: {shape: 'spline'},
     }
-    let layout_fi_t_eta_t = {
-        title: 'Relação do fluxo pela eficiencia',
-        xaxis: {
-            title: 'Φ',
-            showgrid: false,
-            showline: true,
-        },
-        yaxis: {
-            title: 'η',
-            showgrid: false,
-            showline: true,
-            range: [0.1, 0.8]
-        }
-    }
-
+ 
     let data_qtls_hm = {
         x: qt_ls,
         y: h_m,
         name: 'vazão/altura',
         line: {shape: 'spline'},
-    }
-    let layout_qtls_hm = {
-        title: 'Relação da vazão pela altura',
-        xaxis: {
-            title: 'Qt [ls]',
-            showgrid: false,
-            showline: true,
-        },
-        yaxis: {
-            title: 'H [m]',
-            showgrid: false,
-            showline: true,
-        }
     }
 
     let data_qtls_eta_t = {
@@ -169,40 +127,73 @@ function generatePlot(dependency){
         line: {shape: 'spline'},
     }
 
-    let layout_qtls_eta_t = {
-        title: 'Relação da vazão pela eficiencia',
+    let layout_placeholder = {
         xaxis: {
-            title: 'Qt [ls]',
             showgrid: false,
-            showline: true,
-
+            showspikes: true,
+            spikedash: "solid",
+            spikemode: "across",
+            ticks: "inside",
+            mirror: true,
+            linecolor: 'black',
+            linewidth: 1,
         },
         yaxis: {
-            title: 'η',
             showgrid: false,
-            showline: true,
-            range: [0.1, 0.8]
-        }
+            showspikes: true,
+            spikedash: "solid",
+            spikemode: "across",
+            ticks: "inside",
+            mirror: true,
+            linecolor: 'black',
+            linewidth: 1,
+        },
+        showlegend: true,
+        legend: {
+            x: 1,
+            xanchor: 'right',
+            y: 1
+          },
+        paper_bgcolor: "#daeaf5",
     }
+    
+
     tipo = document.querySelector('input[name="tipo"]:checked').value;
 
+    var layout = layout_placeholder;
     switch(tipo){
         case "fi_t_psi_t":
-            data = [data_fi_t_psi_t]
-            layout = layout_fi_t_psi_t 
-            break
+            data = [data_fi_t_psi_t];
+            layout.title = 'Relação do fluxo pela pressão';
+            layout.xaxis.title = 'Φ';
+            layout.yaxis.title = 'Ψ';
+            layout.xaxis.range = [0.8 * Math.min(...fi_t), 1.1 * Math.max(...fi_t)];
+            layout.yaxis.range = [0.8 * Math.min(...psi_t), 1.1 * Math.max(...psi_t)];
+            break;
         case "fi_t_eta_t":
             data = [data_fi_t_eta_t]
-            layout = layout_fi_t_eta_t 
-            break
+            layout.title = 'Relação do fluxo pela eficiencia',
+            layout.xaxis.title = 'Φ';
+            layout.yaxis.title = 'η';
+            layout.xaxis.range = [0.8 * Math.min(...fi_t), 1.1 * Math.max(...fi_t)];
+            layout.yaxis.range = [0.8 * Math.min(...eta_t), 1.1 * Math.max(...eta_t)];
+            break;
         case "qtls_hm":
             data = [data_qtls_hm]
-            layout = layout_qtls_hm
-            break
+            layout.title = 'Relação da vazão pela altura',
+            layout.xaxis.title = 'Qt [ls]';
+            layout.yaxis.title = 'H [m]';
+            layout.xaxis.range = [0.8 * Math.min(...qt_ls), 1.1 * Math.max(...qt_ls)];
+            layout.yaxis.range = [0.8 * Math.min(...h_m), 1.1 * Math.max(...h_m)];
+            break;
         case "qtls_eta_t":
-            data = [data_qtls_eta_t]
-            layout = layout_qtls_eta_t
-            break
+            data = [data_qtls_eta_t];
+            layout.title = 'Relação da vazão pela eficiencia';
+            layout.xaxis.title = 'Qt [ls]';
+            layout.yaxis.title = 'η';
+            layout.xaxis.range = [0.8 * Math.min(...qt_ls), 1.1 * Math.max(...qt_ls)];
+            layout.yaxis.range = [0.8 * Math.min(...eta_t), 1.1 * Math.max(...eta_t)];
+            break;
     }
     analiseModelo(['qti', 'hti', 'qt_m3s', 'ht_m'])
     Plotly.newPlot('grafico', data, layout, {responsive: true})
