@@ -49,6 +49,12 @@ form .model{
     background-color: ghostwhite;
     font-size: medium;
 }
+.field select{
+    padding: 5px;
+    font-size: 16px;
+    border-radius: 10px;
+
+}
 label{
     font-size: 16px;
 }

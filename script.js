@@ -5,75 +5,74 @@ function applyChanges(affectedsRows){
 }
 function getDependency(dependency){
     let dependencyObject = {};
-    let dependencyName;
     let dependencyValue;
     for(let x = 0; x<dependency.length; x++){
-        /*dependencyName = document.getElementById(dependency[x]).name*/
         dependencyValue = document.getElementById(dependency[x]).value
         dependencyObject[dependency[x]] = parseFloat(dependencyValue);
     }
     return dependencyObject;
 }
+
+
 function analiseModelo(dependency){
     dependencies = getDependency(dependency)
     let aviso_span = document.getElementById("aviso");
     let aviso_campo = document.getElementById("aviso-campo");
-    if(dependencies['qb_m3s'] < dependencies['qt_m3s']){
-        aviso_span.innerHTML = "O valor da turbina é maior que o da bomba"
+    if(dependencies['fluxo_valvula'] <= dependencies['fluxo_turbina_m3s']){
+        aviso_span.innerHTML = "O dados da BFT são maiores que o da VCP"
         aviso_campo.classList.add("success");
         for(let x = 0; x<dependency.length; x++){document.getElementById(dependency[x]).classList.add("success")}
     }else{
-        aviso_span.innerHTML = "O valor da turbina é menor que o da bomba"
+        aviso_span.innerHTML = "O dados da BFT são menores que o da VCP"
         aviso_campo.classList.add("fail");
         for(let x = 0; x<dependency.length; x++){document.getElementById(dependency[x]).classList.add("fail")}
-
     }
 }
 function autoCalculate(field, dependency) {
-    if (typeof field == "string") {field = document.getElementById('y1_nib')}
+    if (typeof field == "string") {field = document.getElementById('eficiencia_estimada')}
     var inputValue = parseFloat(field.value);
     var inputName = field.name;
     var dependency = getDependency(dependency)
 
-    if (inputName == "y1_nib"){
-        y1_q = ((1.2)/Math.pow(inputValue, 0.55))
-        y1_h = ((1.2)/Math.pow(inputValue, 1.1))
-        qb_m3s = dependency['qti'] / y1_q
-        qb_m3h = qb_m3s * 3600
-        hb = dependency['hti'] / y1_h
-        n_rps = dependency['n_rpm'] / 60
-        y1_ns_rps = (n_rps * Math.pow(qb_m3s, 0.5))/Math.pow((9.81*hb), 0.75)
-        y1_ns_rad = 2*Math.PI*y1_ns_rps
-        qti_convertido = 3600 * dependency['qti']
-        applyChanges({"y1_q":y1_q, "y1_h":y1_h, "qb_m3s":qb_m3s, "qb_m3h":qb_m3h, "hb":hb, "n_rps":n_rps, "y1_ns_rps":y1_ns_rps, "y1_ns_rad":y1_ns_rad, "qti_convertido":qti_convertido})
+    if (inputName == "eficiencia_estimada"){
+        coeficiente_vazao_bomba = ((1.2)/Math.pow(inputValue, 0.55))
+        coeficiente_altura_bomba = ((1.2)/Math.pow(inputValue, 1.1))
+        fluxo_bomba_m3s = dependency['fluxo_valvula'] / coeficiente_vazao_bomba
+        fluxo_bomba_m3h = fluxo_bomba_m3s * 3600
+        altura_bomba = dependency['altura_valvula'] / coeficiente_altura_bomba
+        rotacao_bomba_rps = dependency['rotacao_bomba_rpm'] / 60
+        velocidade_especifica_rps = (rotacao_bomba_rps * Math.pow(fluxo_bomba_m3s, 0.5))/Math.pow((9.81*altura_bomba), 0.75)
+        velocidade_especifica_rad = 2*Math.PI*velocidade_especifica_rps
+        fluxo_valvula_convertido = 3600 * dependency['fluxo_valvula']
+        applyChanges({"coeficiente_vazao_bomba":coeficiente_vazao_bomba, "coeficiente_altura_bomba":coeficiente_altura_bomba, "fluxo_bomba_m3s":fluxo_bomba_m3s, "fluxo_bomba_m3h":fluxo_bomba_m3h, "altura_bomba":altura_bomba, "rotacao_bomba_rps":rotacao_bomba_rps, "velocidade_especifica_rps":velocidade_especifica_rps, "velocidade_especifica_rad":velocidade_especifica_rad, "fluxo_valvula_convertido":fluxo_valvula_convertido})
 
 
-        field = document.getElementById('y2_nb')
+        field = document.getElementById('eficiencia_real')
         var inputValue = parseFloat(field.value);
-        var dependency = getDependency(['qb_m3s', 'hb', 'n_rps', 'd'])
+        var dependency = getDependency(['fluxo_bomba_m3s', 'altura_bomba', 'rotacao_bomba_rps', 'diametro_bomba'])
 
-        y2_q = ((1.2)/Math.pow(inputValue, 0.55))
-        y2_h = ((1.2)/Math.pow(inputValue, 1.1))
-        qt_m3s = dependency['qb_m3s'] * y2_q
-        qt_m3h = qt_m3s * 3600
-        ht_m = dependency['hb'] * y2_h
-        fi_bept = ((qt_m3s) / ((dependency['n_rps']) * (Math.pow(dependency['d'], 3))))
-        psi_bept = (9.81*ht_m) / Math.pow((dependency['n_rps'] * dependency['d']), 2)
-        y2_ns_rps = (dependency['n_rps'] * Math.pow(qt_m3s, 0.5))/Math.pow(9.81*(dependency['hb']), 0.75)
-        y2_ns_rad = 2*Math.PI*y2_ns_rps
-        applyChanges({"y2_q":y2_q, "y2_h":y2_h, "qt_m3s":qt_m3s, "qt_m3h":qt_m3h, "ht_m":ht_m, "fi_bept":fi_bept, "psi_bept":psi_bept, "y2_ns_rps":y2_ns_rps, "y2_ns_rad":y2_ns_rad})
+        coeficiente_vazao_turbina = ((1.2)/Math.pow(inputValue, 0.55))
+        coeficiente_altura_turbina = ((1.2)/Math.pow(inputValue, 1.1))
+        fluxo_turbina_m3s = dependency['fluxo_bomba_m3s'] * coeficiente_vazao_turbina
+        fluxo_turbina_m3h = fluxo_turbina_m3s * 3600
+        altura_turbina = dependency['altura_bomba'] * coeficiente_altura_turbina
+        coeficiente_vazao_turbina_mpe = ((fluxo_turbina_m3s) / ((dependency['rotacao_bomba_rps']) * (Math.pow(dependency['diametro_bomba'], 3))))
+        coeficiente_altura_turbina_mpe = (9.81*altura_turbina) / Math.pow((dependency['rotacao_bomba_rps'] * dependency['diametro_bomba']), 2)
+        velocidade_especifica_turbina_rps = (dependency['rotacao_bomba_rps'] * Math.pow(fluxo_turbina_m3s, 0.5))/Math.pow(9.81*(dependency['altura_bomba']), 0.75)
+        velocidade_especifica_turbina_rad = 2*Math.PI*velocidade_especifica_turbina_rps
+        applyChanges({"coeficiente_vazao_turbina":coeficiente_vazao_turbina, "coeficiente_altura_turbina":coeficiente_altura_turbina, "fluxo_turbina_m3s":fluxo_turbina_m3s, "fluxo_turbina_m3h":fluxo_turbina_m3h, "altura_turbina":altura_turbina, "coeficiente_vazao_turbina_mpe":coeficiente_vazao_turbina_mpe, "coeficiente_altura_turbina_mpe":coeficiente_altura_turbina_mpe, "velocidade_especifica_turbina_rps":velocidade_especifica_turbina_rps, "velocidade_especifica_turbina_rad":velocidade_especifica_turbina_rad})
     }
-    if (inputName == "y2_nb"){
-        y2_q = ((1.2)/Math.pow(inputValue, 0.55))
-        y2_h = ((1.2)/Math.pow(inputValue, 1.1))
-        qt_m3s = dependency['qb_m3s'] * y2_q
-        qt_m3h = qt_m3s * 3600
-        ht_m = dependency['hb'] * y2_h
-        fi_bept = ((qt_m3s) / ((dependency['n_rps']) * (Math.pow(dependency['d'], 3))))
-        psi_bept = (9.81*ht_m) / Math.pow((dependency['n_rps'] * dependency['d']), 2)
-        y2_ns_rps = (dependency['n_rps'] * Math.pow(qt_m3s, 0.5))/Math.pow(9.81*(dependency['hb']), 0.75)
-        y2_ns_rad = 2*Math.PI*y2_ns_rps
-        applyChanges({"y2_q":y2_q, "y2_h":y2_h, "qt_m3s":qt_m3s, "qt_m3h":qt_m3h, "ht_m":ht_m, "fi_bept":fi_bept, "psi_bept":psi_bept, "y2_ns_rps":y2_ns_rps, "y2_ns_rad":y2_ns_rad})
+    if (inputName == "eficiencia_real"){
+        coeficiente_vazao_turbina = ((1.2)/Math.pow(inputValue, 0.55))
+        coeficiente_altura_turbina = ((1.2)/Math.pow(inputValue, 1.1))
+        fluxo_turbina_m3s = dependency['fluxo_bomba_m3s'] * coeficiente_vazao_turbina
+        fluxo_turbina_m3h = fluxo_turbina_m3s * 3600
+        altura_turbina = dependency['altura_bomba'] * coeficiente_altura_turbina
+        coeficiente_vazao_turbina_mpe = ((fluxo_turbina_m3s) / ((dependency['rotacao_bomba_rps']) * (Math.pow(dependency['diametro_bomba'], 3))))
+        coeficiente_altura_turbina_mpe = (9.81*altura_turbina) / Math.pow((dependency['rotacao_bomba_rps'] * dependency['diametro_bomba']), 2)
+        velocidade_especifica_turbina_rps = (dependency['rotacao_bomba_rps'] * Math.pow(fluxo_turbina_m3s, 0.5))/Math.pow(9.81*(dependency['altura_bomba']), 0.75)
+        velocidade_especifica_turbina_rad = 2*Math.PI*velocidade_especifica_turbina_rps
+        applyChanges({"coeficiente_vazao_turbina":coeficiente_vazao_turbina, "coeficiente_altura_turbina":coeficiente_altura_turbina, "fluxo_turbina_m3s":fluxo_turbina_m3s, "fluxo_turbina_m3h":fluxo_turbina_m3h, "altura_turbina":altura_turbina, "coeficiente_vazao_turbina_mpe":coeficiente_vazao_turbina_mpe, "coeficiente_altura_turbina_mpe":coeficiente_altura_turbina_mpe, "velocidade_especifica_turbina_rps":velocidade_especifica_turbina_rps, "velocidade_especifica_turbina_rad":velocidade_especifica_turbina_rad})
     }
 }
 function generatePlot(dependency){
@@ -83,7 +82,7 @@ function generatePlot(dependency){
     eta_t = []
     qt_ls = []
     h_m = []
-    fi_t.push(dependency['fi_bept'])
+    fi_t.push(dependency['coeficiente_vazao_turbina_mpe'])
 
     for(x=1;x<40;x++){
         fi_t.unshift(fi_t[x - 1] - (0.003 * x))
@@ -94,10 +93,10 @@ function generatePlot(dependency){
     }
 
     for (x = 0; x<fi_t.length; x++){
-        psi_t.push(dependency['psi_bept']*(0.2394*Math.pow(fi_t[x]/dependency['fi_bept'], 2) + 0.769*(fi_t[x]/dependency['fi_bept'])))
-        eta_t.push(((-1.9788*(Math.pow(fi_t[x]/dependency['fi_bept'], 6)))+(9.0636*(Math.pow(fi_t[x]/dependency['fi_bept'], 5)))-(13.148*(Math.pow(fi_t[x]/dependency['fi_bept'], 4)))+(3.8527*(Math.pow(fi_t[x]/dependency['fi_bept'], 3)))+(4.5614*(Math.pow(fi_t[x]/dependency['fi_bept'], 2)))-(1.3769*((fi_t[x]/dependency['fi_bept']))))*(dependency['y2_nb']))
-        qt_ls.push((((fi_t[x])*((dependency['n_rps'])*(Math.pow(dependency['d'], 3))))*1000)/3.6)
-        h_m.push((psi_t[x]* Math.pow(dependency['n_rps'] * dependency['d'], 2)) / 9.81)
+        psi_t.push(dependency['coeficiente_altura_turbina_mpe']*(0.2394*Math.pow(fi_t[x]/dependency['coeficiente_vazao_turbina_mpe'], 2) + 0.769*(fi_t[x]/dependency['coeficiente_vazao_turbina_mpe'])))
+        eta_t.push(((-1.9788*(Math.pow(fi_t[x]/dependency['coeficiente_vazao_turbina_mpe'], 6)))+(9.0636*(Math.pow(fi_t[x]/dependency['coeficiente_vazao_turbina_mpe'], 5)))-(13.148*(Math.pow(fi_t[x]/dependency['coeficiente_vazao_turbina_mpe'], 4)))+(3.8527*(Math.pow(fi_t[x]/dependency['coeficiente_vazao_turbina_mpe'], 3)))+(4.5614*(Math.pow(fi_t[x]/dependency['coeficiente_vazao_turbina_mpe'], 2)))-(1.3769*((fi_t[x]/dependency['coeficiente_vazao_turbina_mpe']))))*(dependency['eficiencia_real']))
+        qt_ls.push((((fi_t[x])*((dependency['rotacao_bomba_rps'])*(Math.pow(dependency['diametro_bomba'], 3))))*1000)/3.6)
+        h_m.push((psi_t[x]* Math.pow(dependency['rotacao_bomba_rps'] * dependency['diametro_bomba'], 2)) / 9.81)
     }
     
     let data_fi_t_psi_t = {
@@ -195,12 +194,12 @@ function generatePlot(dependency){
             layout.yaxis.range = [0.8 * Math.min(...eta_t), 1.1 * Math.max(...eta_t)];
             break;
     }
-    analiseModelo(['qb_m3s', 'qb_m3h', 'qt_m3s', 'qt_m3h']);
+    analiseModelo(['fluxo_valvula', 'altura_valvula', 'fluxo_turbina_m3s', 'altura_turbina']);
     Plotly.newPlot('grafico', data, layout, {responsive: true});
 }
 function start(){
-    autoCalculate(document.getElementById('y1_nib'), ['qti', 'hti', 'n_rpm'])
+    autoCalculate(document.getElementById('eficiencia_estimada'), ['fluxo_valvula', 'altura_valvula', 'rotacao_bomba_rpm'])
     setTimeout(function(){
-        autoCalculate(document.getElementById('y2_nb'), ['qb_m3s', 'hb', 'n_rps', 'd'])
+        autoCalculate(document.getElementById('eficiencia_real'), ['fluxo_bomba_m3s', 'altura_bomba', 'rotacao_bomba_rps', 'diametro_bomba'])
     }, 50);
 }
