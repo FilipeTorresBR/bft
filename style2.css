@@ -1,7 +1,19 @@
+.icon {
+    width: 16px;
+    height: 16px;
+    background-size: cover;
+    background-color: transparent;
+    background-image: url("assets/img/information.png");
+    border: none;
+    text-decoration: none;
+}
+label{
+    font-size: 13px;
+}
+/*
 :root{
-    --primary-color: #ffffff;
-    --secondary-color: #2c2c2c;
-    --terciary-color: #707070;
+    --primary-color: #eee;
+    --secondary-color: #111;
 }
 *{
     margin: 0;
@@ -15,23 +27,20 @@ body{
     font-family: sans-serif;
     margin: 0;
     padding: 0;
-    background-color: var(--secondary-color);
+    background-image: var(--primary-color);
 }
-h2{
-    color: var(--primary-color);
-}
-.section{
+form{
     width: 50%;
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-color: var(--terciary-color);
+    background-color: #daeaf5;
     border-radius: 25px;
     margin: 25px;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
     padding: 15px;
 }
-.section .model{
+form .model{
     padding: 15px;
     margin-bottom: 10px;
     border-radius: 25px;
@@ -45,14 +54,13 @@ h2{
 .field{
     display: flex;
     justify-content: center;
-    align-items: flex-start;
+    align-items: center;
     flex-direction: column;
     width: 270px;
-    color: var(--primary-color);
 }
 .field input{
     padding: 15px;
-    width: 75px;
+    width: 150px;
     border-radius: 15px;
     border: 1px solid black;
     background-color: ghostwhite;
@@ -62,26 +70,22 @@ h2{
     padding: 5px;
     font-size: 16px;
     border-radius: 10px;
+
 }
 label{
-    font-size: 14px;
+    font-size: 16px;
 }
-.info{
-    display: flex;
-    flex-direction: row;
-    width: 50%;
-    height: 10%;
-}
+
 .field input[readonly]{
-    background-color: #bbb;
+    background-color: #ddd;
 }
 input[type="button"]{
     padding: 20px 35px;
     margin: 10px;
     border-radius: 15px;
     font-size: medium;
-    color: var(--primary-color);
-    background-color: var(--secondary-color) !important;
+    color: white;
+    background-color: #6e78ff !important;
     border: 0px solid black;
 }
 input[type="button"]:hover{
@@ -96,17 +100,11 @@ input[type="radio"]{
     display: inline-block;
     cursor: pointer;
 }
-.icon {
-    width: 16px;
-    height: 16px;
-    background-size: cover;
-    background-image: url("assets/img/information.png");
-}
 .tooltip {
     visibility: hidden;
     width: 150px;
-    background-color: var(--secondary-color);
-    color: var(--primary-color);
+    background-color: #333;
+    color: #fff;
     text-align: center;
     border-radius: 6px;
     padding: 5px;
@@ -132,13 +130,12 @@ footer{
     justify-content: center;
     height: 50px;
     width: 100%;
-    background-color: var(--secondary-color);
-    color: var(--primary-color);
+    background-color: #6e78ff !important;
     margin-top: 15px;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
 }
 footer a{
-    color: var(--primary-color);
+    color: #fff;
     font-size: larger;
     text-decoration: none;
 }
@@ -168,10 +165,11 @@ footer a{
     color: rgb(59, 0, 0);
 }
 @media (max-width: 600px) {
-    .section{
+    form{
         width: 80%;
     }
     #grafico{
         width: 80%;
     }
 }
+*/

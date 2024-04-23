@@ -1,3 +1,6 @@
+const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]')
+const popoverList = [...popoverTriggerList].map(popoverTriggerEl => new bootstrap.Popover(popoverTriggerEl))
+let dados = []
 function applyChanges(affectedsRows){
     for (const [key, value] of Object.entries(affectedsRows)) {
         document.getElementById(`${key}`).value=`${value.toFixed(3)}`
@@ -82,6 +85,7 @@ function generatePlot(dependency){
     eta_t = []
     qt_ls = []
     h_m = []
+
     fi_t.push(dependency['coeficiente_vazao_turbina_mpe'])
 
     for(x=1;x<40;x++){
@@ -98,13 +102,14 @@ function generatePlot(dependency){
         qt_ls.push((((fi_t[x])*((dependency['rotacao_bomba_rps'])*(Math.pow(dependency['diametro_bomba'], 3))))*1000)/3.6)
         h_m.push((psi_t[x]* Math.pow(dependency['rotacao_bomba_rps'] * dependency['diametro_bomba'], 2)) / 9.81)
     }
-    
-    let data_fi_t_psi_t = {
-        x: fi_t,
-        y: psi_t,
-        name: 'fluxo/pressão',
-        line: {shape: 'spline'},
+    if (Object.values(dados).length === 0) {
+        dados.push({'fi_t':fi_t, 'psi_t':psi_t, 'eta_t':eta_t, 'qt_ls': qt_ls, 'h_m' : h_m})    
+        $("#dados_listar").append("<li>",JSON.stringify(dados[dados.length - 1]),"</li>");
+    }else if(JSON.stringify(Object.values(dados[dados.length - 1])) !== JSON.stringify(Object.values({'fi_t':fi_t, 'psi_t':psi_t, 'eta_t':eta_t, 'qt_ls': qt_ls, 'h_m' : h_m}))){
+        dados.push({'fi_t':fi_t, 'psi_t':psi_t, 'eta_t':eta_t, 'qt_ls': qt_ls, 'h_m' : h_m})
+        $("#dados_listar").append("<li>",dados[dados.length - 1],"</li>");
     }
+    
     let data_fi_t_eta_t = {
         x: fi_t,
         y: eta_t,
@@ -160,9 +165,17 @@ function generatePlot(dependency){
     tipo = document.querySelector('input[name="tipo"]:checked').value;
 
     var layout = layout_placeholder;
+    data = []
     switch(tipo){
         case "fi_t_psi_t":
-            data = [data_fi_t_psi_t];
+            for(let x = 0; x < dados.length; x++){
+                data.push({
+                    x: dados[x]['fi_t'],
+                    y: dados[x]['psi_t'],
+                    name: 'fluxo/pressão',
+                    line: {shape: 'spline'},
+                })
+            }
             layout.title = 'Relação do fluxo pela pressão';
             layout.xaxis.title = 'Φ';
             layout.yaxis.title = 'Ψ';
@@ -170,7 +183,14 @@ function generatePlot(dependency){
             layout.yaxis.range = [0.8 * Math.min(...psi_t), 1.1 * Math.max(...psi_t)];
             break;
         case "fi_t_eta_t":
-            data = [data_fi_t_eta_t]
+            for(let x = 0; x < dados.length; x++){
+                data.push({
+                    x: dados[x]['fi_t'],
+                    y: dados[x]['eta_t'],
+                    name: 'fluxo/eficiencia',
+                    line: {shape: 'spline'},
+                })
+            }
             layout.title = 'Relação do fluxo pela eficiencia',
             layout.xaxis.title = 'Φ';
             layout.yaxis.title = 'η';
@@ -178,7 +198,14 @@ function generatePlot(dependency){
             layout.yaxis.range = [0.8 * Math.min(...eta_t), 1.1 * Math.max(...eta_t)];
             break;
         case "qtls_hm":
-            data = [data_qtls_hm]
+            for(let x = 0; x < dados.length; x++){
+                data.push({
+                    x: dados[x]['qt_ls'],
+                    y: dados[x]['h_m'],
+                    name: 'vazão/altura',
+                    line: {shape: 'spline'},
+                })
+            }
             layout.title = 'Relação da vazão pela altura',
             layout.xaxis.title = 'Qt [ls]';
             layout.yaxis.title = 'H [m]';
@@ -186,7 +213,14 @@ function generatePlot(dependency){
             layout.yaxis.range = [0.8 * Math.min(...h_m), 1.1 * Math.max(...h_m)];
             break;
         case "qtls_eta_t":
-            data = [data_qtls_eta_t];
+            for(let x = 0; x < dados.length; x++){
+                data.push({
+                    x: dados[x]['qt_ls'],
+                    y: dados[x]['eta_t'],
+                    name: 'vazão/eficiencia',
+                    line: {shape: 'spline'},
+                })
+            }
             layout.title = 'Relação da vazão pela eficiencia';
             layout.xaxis.title = 'Qt [ls]';
             layout.yaxis.title = 'η';

@@ -8,7 +8,7 @@
     <script src="https://cdn.plot.ly/plotly-2.29.1.min.js" charset="utf-8"></script>
 </head>
 <body>
-    <form id="form">
+    <section class="section" id="form">
         <h2>Aproveitamento PRV</h2>
         <div class="model" id="aproveitamento">
             <div class="field">
@@ -232,6 +232,8 @@
                 <input type="text" id="velocidade_especifica_turbina_rad" name="velocidade_especifica_turbina_rad" readonly="true">
             </div>
         </div>
+    </section>
+    <section class="section">
         <div>
             <input type="radio" name="tipo" value="fi_t_psi_t" required>
             <label for="fi_t_psi_t">Φ/Ψ</label>
@@ -246,9 +248,13 @@
             <label for="qtls_eta_t">Qt(ls)/η</label>
         </div>
         <input type="button" value="Gerar Grafico" onclick="generatePlot(['coeficiente_altura_turbina_mpe', 'coeficiente_vazao_turbina_mpe', 'rotacao_bomba_rps', 'diametro_bomba', 'eficiencia_real'])">
-    </form>
-    <div id="aviso-campo"><span id="aviso"></span></div>
-    <div id="grafico"></div>
+        <div id="aviso-campo"><span id="aviso"></span></div>
+        <div id="grafico"></div>
+        <div id="dados">
+            <ul id="dados_listar">
+            </ul>
+        </div>
+    </section>
     <footer>
         <a href="https://github.com/filipetorresbr"><span>Desenvolvido por Filipe Torres</span></a>
     </footer>
@@ -258,6 +264,7 @@ window.onload = function() {
   start();
 };
 </script>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 <script src="script.js"></script>
 
 </html>
