@@ -1,9 +1,7 @@
-const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]')
-const popoverList = [...popoverTriggerList].map(popoverTriggerEl => new bootstrap.Popover(popoverTriggerEl))
 let dados = []
 function applyChanges(affectedsRows){
     for (const [key, value] of Object.entries(affectedsRows)) {
-        document.getElementById(`${key}`).value=`${value.toFixed(3)}`
+        document.getElementById(`${key}`).value=`${value.toPrecision(3)}`
       }
 }
 function getDependency(dependency){
@@ -104,33 +102,12 @@ function generatePlot(dependency){
     }
     if (Object.values(dados).length === 0) {
         dados.push({'fi_t':fi_t, 'psi_t':psi_t, 'eta_t':eta_t, 'qt_ls': qt_ls, 'h_m' : h_m})    
-        $("#dados_listar").append("<li>",JSON.stringify(dados[dados.length - 1]),"</li>");
+        $("#dados_listar").append("<li class=''>Linha: "+dados.length+"<div class='trash'>LX</div></li>");
     }else if(JSON.stringify(Object.values(dados[dados.length - 1])) !== JSON.stringify(Object.values({'fi_t':fi_t, 'psi_t':psi_t, 'eta_t':eta_t, 'qt_ls': qt_ls, 'h_m' : h_m}))){
         dados.push({'fi_t':fi_t, 'psi_t':psi_t, 'eta_t':eta_t, 'qt_ls': qt_ls, 'h_m' : h_m})
-        $("#dados_listar").append("<li>",dados[dados.length - 1],"</li>");
+        $("#dados_listar").append("<li>Linha: "+dados.length+"</li>");
     }
     
-    let data_fi_t_eta_t = {
-        x: fi_t,
-        y: eta_t,
-        name: 'fluxo/eficiencia',
-        line: {shape: 'spline'},
-    }
- 
-    let data_qtls_hm = {
-        x: qt_ls,
-        y: h_m,
-        name: 'vazão/altura',
-        line: {shape: 'spline'},
-    }
-
-    let data_qtls_eta_t = {
-        x: qt_ls,
-        y: eta_t,
-        name: 'vazão/eficiencia',
-        line: {shape: 'spline'},
-    }
-
     let layout_placeholder = {
         xaxis: {
             showgrid: false,
@@ -160,10 +137,7 @@ function generatePlot(dependency){
           },
         paper_bgcolor: "#daeaf5",
     }
-    
-
     tipo = document.querySelector('input[name="tipo"]:checked').value;
-
     var layout = layout_placeholder;
     data = []
     switch(tipo){
