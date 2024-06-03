@@ -76,6 +76,11 @@ function autoCalculate(field, dependency) {
         applyChanges({"coeficiente_vazao_turbina":coeficiente_vazao_turbina, "coeficiente_altura_turbina":coeficiente_altura_turbina, "fluxo_turbina_m3s":fluxo_turbina_m3s, "fluxo_turbina_m3h":fluxo_turbina_m3h, "altura_turbina":altura_turbina, "coeficiente_vazao_turbina_mpe":coeficiente_vazao_turbina_mpe, "coeficiente_altura_turbina_mpe":coeficiente_altura_turbina_mpe, "velocidade_especifica_turbina_rps":velocidade_especifica_turbina_rps, "velocidade_especifica_turbina_rad":velocidade_especifica_turbina_rad})
     }
 }
+function deleteFromList(x){
+    Plotly.deleteTraces('grafico', x-1);
+    $('#li_'+x).remove();
+    dados.splice(x-1, 1)
+}
 
 function generatePlot(dependency){
     dependency = getDependency(dependency)
@@ -103,10 +108,10 @@ function generatePlot(dependency){
     }
     if (Object.values(dados).length === 0) {
         dados.push({'fi_t':fi_t, 'psi_t':psi_t, 'eta_t':eta_t, 'qt_ls': qt_ls, 'h_m' : h_m})    
-        $("#dados_listar").append("<li class='list'>Linha "+dados.length+" <button type='button' style='background-color: transparent; border: none;' onclick='delete("+ dados.length+")'><img class='icon' src='assets/img/trash.png'></button></li>");
+        $("#dados_listar").append("<li id=li_"+dados.length+" class='list'>Linha "+dados.length+" <button type='button' style='background-color: transparent; border: none;' onclick='deleteFromList("+ dados.length+")'><img class='icon' src='assets/img/trash.png'></button></li>");
     }else if(JSON.stringify(Object.values(dados[dados.length - 1])) !== JSON.stringify(Object.values({'fi_t':fi_t, 'psi_t':psi_t, 'eta_t':eta_t, 'qt_ls': qt_ls, 'h_m' : h_m}))){
         dados.push({'fi_t':fi_t, 'psi_t':psi_t, 'eta_t':eta_t, 'qt_ls': qt_ls, 'h_m' : h_m})
-        $("#dados_listar").append("<li class='list'>Linha "+dados.length+" <img class='icon' src='assets/img/trash.png'></li>");
+        $("#dados_listar").append("<li id=li_"+dados.length+" class='list'>Linha "+dados.length+" <button type='button' style='background-color: transparent; border: none;' onclick='deleteFromList("+ dados.length+")'><img class='icon' src='assets/img/trash.png'></button></li>");
     }
     
     let layout_placeholder = {

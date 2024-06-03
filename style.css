@@ -182,6 +182,9 @@ footer a{
     justify-content: space-between;
     flex-direction: row;
 }
+.grafico_btn input{
+    font-size: 18px;
+}
 .list{
     background-color: var(--secondary-color);
     padding: 5px;
