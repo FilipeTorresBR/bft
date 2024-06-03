@@ -32,6 +32,7 @@ h2{
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
     padding: 15px;
 }
+
 .section .model{
     padding: 15px;
     margin-bottom: 10px;
@@ -101,7 +102,15 @@ input[type="radio"]{
     width: 16px;
     height: 16px;
     background-size: cover;
+}
+.info{
     background-image: url("assets/img/information.png");
+}
+.trash{
+    background-image: url("assets/img/trash.png");
+}
+.nowrap{
+    word-wrap: none;
 }
 .tooltip {
     visibility: hidden;
@@ -173,15 +182,22 @@ footer a{
     justify-content: space-between;
     flex-direction: row;
 }
+.list{
+    background-color: var(--secondary-color);
+    padding: 5px;
+    margin: 5px;
+    border-radius: 10px;
+}
 #grafico{
     width: fit-content;
     height: fit-content;
 }
-@media (max-width: 1200px) {
+@media (max-width: 1300px) {
     .section{
         width: 80%;
     }
     #grafico{
-        width: 80%;
+        width: fit-content;
+        height: fit-content;
     }
 }
