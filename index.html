@@ -247,15 +247,13 @@
             <input type="radio" name="tipo" value="qtls_eta_t">
             <label for="qtls_eta_t">Qt(ls)/η</label>
         </div>
-        <input type="button" value="Gerar Grafico" onclick="generatePlot(['coeficiente_altura_turbina_mpe', 'coeficiente_vazao_turbina_mpe', 'rotacao_bomba_rps', 'diametro_bomba', 'eficiencia_real'])">
+        <input type="button" value="Visualizar Grafico" onclick="generatePlot(['coeficiente_altura_turbina_mpe', 'coeficiente_vazao_turbina_mpe', 'rotacao_bomba_rps', 'diametro_bomba', 'eficiencia_real'])">
         <div id="aviso-campo"><span id="aviso"></span></div>
         <div class="grafico-section">
-                <div id="grafico"></div>
-                <div id="dados">
-                    <ul id="dados_listar">
-                    </ul>
-                </div>
+            <div id="grafico"></div>
+            <ul id="dados_listar"></ul>
         </div>
+        <input type="button" value="Gerar relatório" onclick="generatePlot(['coeficiente_altura_turbina_mpe', 'coeficiente_vazao_turbina_mpe', 'rotacao_bomba_rps', 'diametro_bomba', 'eficiencia_real'])">
     </section>
     <footer>
         <a target="_blank" href="https://github.com/filipetorresbr"><span>Desenvolvido por Filipe Torres</span></a>

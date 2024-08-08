@@ -4,229 +4,262 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Calculo BFT</title>
-    <link rel="stylesheet" href="style2.css">
+    <link rel="stylesheet" href="style.css">
     <script src="https://cdn.plot.ly/plotly-2.29.1.min.js" charset="utf-8"></script>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 </head>
 <body>
-    <main class="container-sm d-flex flex-column justify-content-center align-center my-2 bg-dark text-light p-2 w-50">
-        <form class="row g-2 p-4 d-flex justify-content-center align-center">
-            <h2>Aproveitamento PRV</h2>
-            <div class="col-md-3">
-                <label for="fluxo_valvula" class="form-label">Fluxo da Valvula</label>
-                <button type="button" class="icon" data-bs-toggle="popover" data-bs-content="descricao"></button>
-                <div class="input-group">
-                    <input type="number" class="form-control" id="fluxo_valvula" aria-describedby="aproveitamento" required placeholder="00" min="0">
-                    <select class="form-select form-select-xs" id="fluxo_valvula_unidade" aria-label="Escolher unidade" required>
-                        <option selected>unidade</option>
-                        <option value="1">m³/s</option>
-                        <option value="2">m³/h</option>
+    <section class="section" id="form">
+        <h2>Aproveitamento PRV</h2>
+        <div class="model" id="aproveitamento">
+            <div class="field">
+                <label for="fluxo_valvula">Fluxo da Valvula - Qti (m³/s)</label>
+                <div>
+                    <input type="number" id="fluxo_valvula" name="fluxo_valvula" onchange="fluxoValvula(this)" value="0.0198" placeholder="0.00">
+                    <select name="fluxo_valvula_unidade" id="fluxo_valvula_unidade" required>
+                        <option value="m3s">m³/s</option>
+                        <option value="m3h">m³/h</option>
                     </select>
                 </div>
             </div>
-            <div class="col-md-2">
-                <label for="fluxo_valvula_convertido" class="form-label">Fluxo da Valvula</label>
-                <button type="button" class="icon" data-bs-toggle="popover" data-bs-content="adicionar descricao"></button>
-                <div class="input-group">
-                    <input type="number" class="form-control" id="fluxo_valvula_convertido" aria-describedby="aproveitamento" required placeholder="00" min="0">
-                    <span class="input-group-text" id="fluxo_valvula_unidade_convertido">uni</span>
-                </div>
+            <div class="field">
+                <label for="fluxo_valvula_convertido">Fluxo da Valvula - Qti (m³/h)</label>
+                <input type="number" id="fluxo_valvula_convertido" name="fluxo_valvula_convertido" readonly placeholder="0.00">
+            </div>            
+            <div class="field">
+                <label for="altura_valvula">Altura da Valvula - Hti (m)</label>
+                <input type="number" id="altura_valvula" name="altura_valvula" onchange="" value="39.89" placeholder="0.00">
+            </div>    
+        </div>
+        <h2>Yang</h2>
+        <div class="model" id="yang1">
+            <div class="field">
+                <label for="eficiencia_estimada">Eficiencia estimada (ηib) 
+                    <div class="icon-container">
+                        <div class="icon info"></div>
+                        <div class="tooltip">Valor de eficiencia estimada da bomba. Entre 0 e 1</div>
+                    </div>
+                </label>
+                <input type="number" id="eficiencia_estimada" name="eficiencia_estimada" onchange="eficiencia(this)" min="0" max="1" placeholder="0.7" placeholder="0.00">
             </div>
-            <div class="col-md-2">
-                <label for="fluxo_valvula_convertido" class="form-label">Altura da Valvula</label>
-                <button type="button" class="icon" data-bs-toggle="popover" data-bs-content="adicionar descricao"></button>
-                <div class="input-group">
-                    <input type="number" class="form-control" id="altura_valvula" aria-describedby="aproveitamento" required placeholder="00" min="0">
-                    <span class="input-group-text">m</span>
-                </div>
+            <div class="field">
+                <label for="coeficiente_vazao_bomba">Coeficiente de vazão da bomba - (q)
+                    <div class="icon-container">
+                        <div class="icon info"></div>
+                        <div class="tooltip">Definido por: 
+                            <math>
+                                <mfrac>
+                                    <mn>1.2</mn>
+                                    <mn>ηib⁰·⁵⁵</mn>
+                                </mfrac>
+                            </math>
+                        </div>
+                    </div>
+                </label>
+                <input type="number" id="coeficiente_vazao_bomba" name="coeficiente_vazao_bomba" readonly="true" placeholder="0.00">
             </div>
-            <h2>Yang</h2>
-            <div class="col-md-2">
-                <label for="eficiencia_estimada" class="form-label">Eficiencia estimada <span type="button" class="icon" data-bs-toggle="popover" data-bs-content="Valor de eficiencia estimada da bomba. Entre 0 e 1"></span></label>
-                
-                <input type="number" class="form-control" id="eficiencia_estimada" aria-describedby="yang" required placeholder="00" min="0">
+            <div class="field">
+                <label for="coeficiente_altura_bomba">Coeficiente de altura da bomba - (h)
+                    <div class="icon-container">
+                        <div class="icon info"></div>
+                        <div class="tooltip">Definido por: 
+                            <math>
+                                <mfrac>
+                                    <mn>1.2</mn>
+                                    <mn>ηib¹·¹</mn>
+                                </mfrac>
+                            </math>
+                        </div>
+                    </div>
+                </label>
+                <input type="number" id="coeficiente_altura_bomba" name="coeficiente_altura_bomba" readonly="true" placeholder="0.00">
             </div>
-            <div class="col-md-2">
-                <label for="coeficiente_vazao_bomba" class="form-label">Coeficiente de vazão da bomba </label>
-                <button type="button" class="icon" data-bs-toggle="popover" data-bs-content="adicionar descricao"></button>
-                <input type="number" class="form-control" id="coeficiente_vazao_bomba" aria-describedby="yang" required placeholder="00" min="0">
+            <div class="field">
+                <label for="fluxo_bomba_m3s">Fluxo da bomba - Qb(m³/s)
+                    <div class="icon-container">
+                        <div class="icon info"></div>
+                        <div class="tooltip">Definido por: 
+                            <math>
+                                <mfrac>
+                                    <mn>Qti (m³/s)</mn>
+                                    <mn>q</mn>
+                                </mfrac>
+                            </math>
+                        </div>
+                    </div>
+                </label>
+                <input type="number" id="fluxo_bomba_m3s" name="fluxo_bomba_m3s" readonly="true" placeholder="0.00">
+            </div>    
+            <div class="field">
+                <label for="fluxo_bomba_m3h">Fluxo da bomba - Qb(m³/h)
+                    <div class="icon-container">
+                        <div class="icon info"></div>
+                        <div class="tooltip">Definido por: 
+                            <math>
+                                <mfrac>
+                                    <mn>Qti (m³/s) &times 3600</mn>
+                                </mfrac>
+                            </math>
+                        </div>
+                    </div>
+                </label>
+                <input type="number" id="fluxo_bomba_m3h" name="fluxo_bomba_m3h" readonly="true" placeholder="0.00">
+            </div>    
+            <div class="field">
+                <label for="altura_bomba">Altura da bomba - Hb(m)
+                    <div class="icon-container">
+                        <div class="icon info"></div>
+                        <div class="tooltip">Definido por: 
+                            <math>
+                                <mfrac>
+                                    <mn>Hti (m)</mn>
+                                    <mn>h</mn>
+                                </mfrac>
+                            </math>
+                        </div>
+                    </div>
+                </label>
+                <input type="number" id="altura_bomba" name="altura_bomba" readonly="true" placeholder="0.00">
+            </div>   
+            <div class="field">
+                <label for="rotacao_bomba_rpm">Rotação da bomba - N(rpm)
+                    <div class="icon-container">
+                        <div class="icon info"></div>
+                        <div class="tooltip">Fornecido pelo fabricante da bomba</div>
+                    </div>
+                </label>
+                <input type="number" id="rotacao_bomba_rpm" name="rotacao_bomba_rpm" onchange="rotacaoBomba(this.value)" placeholder="0000">
+            </div>     
+            <div class="field">
+                <label for="rotacao_bomba_rps">Rotação da bomba - N(rps)
+                    <div class="icon-container">
+                        <div class="icon info"></div>
+                        <div class="tooltip">Definido por: 
+                            <math>
+                                <mfrac>
+                                    <mn>N (rpm)</mn>
+                                    <mn>60</mn>
+                                </mfrac>
+                            </math>
+                        </div>
+                    </div>
+                </label>
+                <input type="number" id="rotacao_bomba_rps" name="rotacao_bomba_rps" readonly="true" placeholder="0.00">
+            </div>     
+            <div class="field">
+                <label for="diametro_bomba">Diamentro da bomba - D(m)
+                    <div class="icon-container">
+                        <div class="icon info"></div>
+                        <div class="tooltip">Fornecido pelo fabricante da bomba</div>
+                    </div>
+                </label>
+                <input type="number" id="diametro_bomba" name="diametro_bomba" onchange="" value="0.123">
+            </div>   
+            <div class="field">
+                <label for="p_kw">P (kW)</label>
+                <input type="number" id="p_kw" name="p_kw" onchange="" placeholder="0.00">
+            </div> 
+            <div class="field">
+                <label for="velocidade_especifica_rps">Velocidade específica da bomba - Ns(rps)
+                    <div class="icon-container">
+                        <div class="icon info"></div>
+                        <div class="tooltip">Definido por: 
+                            <math>
+                                <mfrac>
+                                    <mn>N (rps) &times Qb (m³/s)⁰·⁵</mn>
+                                    <mn>(9.81 &times Hb (m))⁰·⁷⁵</mn>
+                                </mfrac>
+                            </math>
+                        </div>
+                    </div>
+                </label>
+                <input type="number" id="velocidade_especifica_bomba_rps" name="velocidade_especifica_bomba_rps" readonly="true"  placeholder="0.00">
+            </div>  
+            <div class="field">
+                <label for="velocidade_especifica_bomba_rad">Velocidade específica da bomba - Ns(rad/s)
+                    <div class="icon-container">
+                        <div class="icon info"></div>
+                        <div class="tooltip">Definido por: 
+                            <math>
+                                <mfrac>
+                                    <mn>2 &times &pi; &times Ns (rps)</mn>
+                                </mfrac>
+                            </math>
+                        </div>
+                    </div>
+                </label>
+                <input type="number" id="velocidade_especifica_bomba_rad" name="velocidade_especifica_bomba_rad" readonly="true"  placeholder="0.00">
+            </div>  
+        </div>
+        <div class="model" id="yang2">
+            <div class="field">
+                <label for="eficiencia_real">Eficienciencia real - (ηb)</label>
+                <input type="number" id="eficiencia_real" name="eficiencia_real" onchange="eficiencia(this)" placeholder="0.00">
             </div>
-            <div class="col-md-2">
-                <label for="coeficiente_altura_bomba" class="form-label">Coeficiente de altura da bomba </label>
-                <button type="button" class="icon" data-bs-toggle="popover" data-bs-content="adicionar descricao"></button>
-                <input type="number" class="form-control" id="coeficiente_altura_bomba" aria-describedby="yang" required placeholder="00" min="0">
+            <div class="field">
+                <label for="coeficiente_vazao_turbina">Coeficiente de vazão da turbina - (q)</label>
+                <input type="number" id="coeficiente_vazao_turbina" name="coeficiente_vazao_turbina" readonly="true" placeholder="0.00">
             </div>
-            <div class="col-md-3">
-                <label for="fluxo_bomba" class="form-label">Fluxo da bomba</label>
-                <button type="button" class="icon" data-bs-toggle="popover" data-bs-content="descricao"></button>
-                <div class="input-group">
-                    <input type="number" class="form-control" id="fluxo_bomba" aria-describedby="yang" required placeholder="00" min="0">
-                    <select class="form-select form-select-xs" id="fluxo_bomba_unidade" aria-label="Escolher unidade" required>
-                        <option selected>unidade</option>
-                        <option value="1">m³/s</option>
-                        <option value="2">m³/h</option>
-                    </select>
-                </div>
+            <div class="field">
+                <label for="coeficiente_altura_turbina">Coeficiente de altura da turbina - (h)</label>
+                <input type="number" id="coeficiente_altura_turbina" name="coeficiente_altura_turbina" readonly="true" placeholder="0.00">
             </div>
-            <div class="col-md-2">
-                <label for="fluxo_bomba_convertido" class="form-label">Fluxo da bomba</label>
-                <button type="button" class="icon" data-bs-toggle="popover" data-bs-content="adicionar descricao"></button>
-                <div class="input-group">
-                    <input type="number" class="form-control" id="fluxo_bomba_convertido" aria-describedby="yang" required placeholder="00" min="0">
-                    <span class="input-group-text" id="fluxo_bomba_unidade_convertido">uni</span>
-                </div>
+            <div class="field">
+                <label for="fluxo_turbina_m3s">Fluxo da turbina - Qt(m³/s)</label>
+                <input type="number" id="fluxo_turbina_m3s" name="fluxo_turbina_m3s" readonly="true" placeholder="0.00">
             </div>
-            <div class="col-md-2">
-                <label for="altura_bomba" class="form-label">Altura da bomba</label>
-                <button type="button" class="icon" data-bs-toggle="popover" data-bs-content="adicionar descricao"></button>
-                <div class="input-group">
-                    <input type="number" class="form-control" id="altura_bomba" aria-describedby="yang" required placeholder="00" min="0">
-                    <span class="input-group-text">m</span>
-                </div>
+            <div class="field">
+                <label for="fluxo_turbina_m3h">Fluxo da turbina - Qt(m³/h)</label>
+                <input type="number" id="fluxo_turbina_m3h" name="fluxo_turbina_m3h" readonly="true" placeholder="0.00">
             </div>
-            <div class="col-md-3">
-                <label for="rotacao_bomba" class="form-label">Rotação da bomba</label>
-                <button type="button" class="icon" data-bs-toggle="popover" data-bs-content="Fornecido pelo fabricante da bomba"></button>
-                <div class="input-group">
-                    <input type="number" class="form-control" id="rotacao_bomba" aria-describedby="yang" required placeholder="00" min="0">
-                    <select class="form-select form-select-xs" id="rotacao_bomba_unidade" aria-label="Escolher unidade" required>
-                        <option selected>unidade</option>
-                        <option value="1">rps</option>
-                        <option value="2">rpm</option>
-                    </select>
-                </div>
+            <div class="field">
+                <label for="altura_turbina">Altura da turbina - Ht(m)</label>
+                <input type="number" id="altura_turbina" name="altura_turbina" readonly="true" placeholder="0.00">
             </div>
-            <div class="col-md-2">
-                <label for="rotacao_bomba_convertido" class="form-label">Rotação da bomba</label>
-                <button type="button" class="icon" data-bs-toggle="popover" data-bs-content="adicionar descricao"></button>
-                <div class="input-group">
-                    <input type="number" class="form-control" id="rotacao_bomba_convertido" aria-describedby="yang" required placeholder="00" min="0">
-                    <span class="input-group-text" id="rotacao_bomba_unidade_convertido">uni</span>
-                </div>
+            <div class="field">
+                <label for="coeficiente_vazao_turbina_mpe">Coeficiente de vazão da turbina no MPE (φ)</label>
+                <input type="number" id="coeficiente_vazao_turbina_mpe" name="coeficiente_vazao_turbina_mpe" readonly="true" placeholder="0.00">
             </div>
-            <div class="col-md-2">
-                <label for="diametro_bomba" class="form-label">Diamentro da bomba</label>
-                <button type="button" class="icon" data-bs-toggle="popover" data-bs-content="Fornecido pelo fabricante da bomba"></button>
-                <div class="input-group">
-                    <input type="number" class="form-control" id="diametro_bomba" aria-describedby="yang" required placeholder="00" min="0">
-                    <span class="input-group-text">m</span>
-                </div>
+            <div class="field">
+                <label for="coeficiente_altura_turbina_mpe">Coeficiente de pressão da turbina no MPE (ψ)</label>
+                <input type="number" id="coeficiente_altura_turbina_mpe" name="coeficiente_altura_turbina_mpe" readonly="true" placeholder="0.00">
             </div>
-            <div class="col-md-2">
-                <label for="diametro_bomba" class="form-label">Potencia</label>
-                <button type="button" class="icon" data-bs-toggle="popover" data-bs-content="Fornecido pelo fabricante da bomba"></button>
-                <div class="input-group">
-                    <input type="number" class="form-control" id="diametro_bomba" aria-describedby="yang" required placeholder="00" min="0">
-                    <span class="input-group-text">kW</span>
-                </div>
+            <div class="field">
+                <label for="velocidade_especifica_turbina_rps">Velocidade específica da turbina N(rps)</label>
+                <input type="number" id="velocidade_especifica_turbina_rps" name="velocidade_especifica_turbina_rps" readonly="true" placeholder="0.00">
             </div>
-            <div class="col-md-2">
-                <label for="velocidade_especifica_rps" class="form-label">Velocidade específica</label>
-                <button type="button" class="icon" data-bs-toggle="popover" data-bs-content="Fornecido pelo fabricante da bomba"></button>
-                <div class="input-group">
-                    <input type="number" class="form-control" id="velocidade_especifica_rps" aria-describedby="yang" required placeholder="00" min="0">
-                    <span class="input-group-text">rps</span>
-                </div>
+            <div class="field">
+                <label for="velocidade_especifica_turbina_rad">Velocidade específica da turbina Ns(rad/s)</label>
+                <input type="number" id="velocidade_especifica_turbina_rad" name="velocidade_especifica_turbina_rad" readonly="true" placeholder="0.00">
             </div>
-            <div class="col-md-2">
-                <label for="velocidade_especifica_rad" class="form-label">Velocidade específica</label>
-                <button type="button" class="icon" data-bs-toggle="popover" data-bs-content="Fornecido pelo fabricante da bomba"></button>
-                <div class="input-group">
-                    <input type="number" class="form-control" id="velocidade_especifica_rad" aria-describedby="yang" required placeholder="00" min="0">
-                    <span class="input-group-text">rad</span>
-                </div>
-            </div>
-            <div class="col-md-2">
-                <label for="eficiencia_real" class="form-label">Eficienciencia real</label>
-                <button type="button" class="icon" data-bs-toggle="popover" data-bs-content="Fornecido pelo fabricante da bomba"></button>
-                <div class="input-group">
-                    <input type="number" class="form-control" id="eficiencia_real" aria-describedby="yang" required placeholder="00" min="0">
-                </div>
-            </div>
-            <div class="col-md-2">
-                <label for="coeficiente_vazao_turbina" class="form-label">Coeficiente de vazão da turbina</label>
-                <button type="button" class="icon" data-bs-toggle="popover" data-bs-content="Fornecido pelo fabricante da bomba"></button>
-                <div class="input-group">
-                    <input type="number" class="form-control" id="coeficiente_vazao_turbina" aria-describedby="yang" required placeholder="00" min="0">
-                </div>
-            </div>
-            <div class="col-md-2">
-                <label for="coeficiente_altura_turbina" class="form-label">Coeficiente de altura da turbina</label>
-                <button type="button" class="icon" data-bs-toggle="popover" data-bs-content="Fornecido pelo fabricante da bomba"></button>
-                <div class="input-group">
-                    <input type="number" class="form-control" id="coeficiente_altura_turbina" aria-describedby="yang" required placeholder="00" min="0">
-                </div>
-            </div>
-            <div class="col-md-2">
-                <label for="fluxo_turbina_m3s" class="form-label">Fluxo da turbina</label>
-                <button type="button" class="icon" data-bs-toggle="popover" data-bs-content="adicionar descricao"></button>
-                <div class="input-group">
-                    <input type="number" class="form-control" id="fluxo_turbina_m3s" aria-describedby="yang" required placeholder="00" min="0">
-                    <span class="input-group-text">m³/s</span>
-                </div>
-            </div>
-            <div class="col-md-2">
-                <label for="fluxo_turbina_m3h" class="form-label">Fluxo da turbina</label>
-                <button type="button" class="icon" data-bs-toggle="popover" data-bs-content="adicionar descricao"></button>
-                <div class="input-group">
-                    <input type="number" class="form-control" id="fluxo_turbina_m3h" aria-describedby="yang" required placeholder="00" min="0">
-                    <span class="input-group-text">m³/s</span>
-                </div>
-            </div>
-            <div class="col-md-2">
-                <label for="altura_turbina" class="form-label">Altura da turbina</label>
-                <button type="button" class="icon" data-bs-toggle="popover" data-bs-content="adicionar descricao"></button>
-                <div class="input-group">
-                    <input type="number" class="form-control" id="altura_turbina" aria-describedby="yang" required placeholder="00" min="0">
-                    <span class="input-group-text">m</span>
-                </div>
-            </div>
-            <div class="col-md-2">
-                <label for="coeficiente_vazao_turbina_mpe" class="form-label">Coeficiente de vazão da turbina no MPE (φ)</label>
-                <button type="button" class="icon" data-bs-toggle="popover" data-bs-content="adicionar descricao"></button>
-                <div class="input-group">
-                    <input type="number" class="form-control" id="coeficiente_vazao_turbina_mpe" aria-describedby="yang" required placeholder="00" min="0">
-                </div>
-            </div>
-            <div class="col-md-2">
-                <label for="coeficiente_altura_turbina_mpe" class="form-label">Coeficiente de pressão da turbina no MPE (φ)</label>
-                <button type="button" class="icon" data-bs-toggle="popover" data-bs-content="adicionar descricao"></button>
-                <div class="input-group">
-                    <input type="number" class="form-control" id="coeficiente_altura_turbina_mpe" aria-describedby="yang" required placeholder="00" min="0">
-                </div>
-            </div>
-            <div class="col-md-2">
-                <label for="velocidade_especifica_turbina_rps" class="form-label">Velocidade específica</label>
-                <button type="button" class="icon" data-bs-toggle="popover" data-bs-content="adicionar descricao"></button>
-                <div class="input-group">
-                    <input type="number" class="form-control" id="velocidade_especifica_turbina_rps" aria-describedby="yang" required placeholder="00" min="0">
-                    <span class="input-group-text">rps</span>
-                </div>
-            </div>
-            <div class="col-md-2">
-                <label for="velocidade_especifica_turbina_rad" class="form-label">Velocidade específica</label>
-                <button type="button" class="icon" data-bs-toggle="popover" data-bs-content="adicionar descricao"></button>
-                <div class="input-group">
-                    <input type="number" class="form-control" id="velocidade_especifica_turbina_rad" aria-describedby="yang" required placeholder="00" min="0">
-                    <span class="input-group-text">rad</span>
-                </div>
-            </div>
-        </main>
-        <input type="button" value="Gerar Grafico" onclick="generatePlot(['coeficiente_altura_turbina_mpe', 'coeficiente_vazao_turbina_mpe', 'rotacao_bomba_rps', 'diametro_bomba', 'eficiencia_real'])">
-    </form>
-    <div id="aviso-campo"><span id="aviso"></span></div>
-    <div id="grafico"></div>
+        </div>
+    </section>
+    <section class="section">
+        <div>
+            <input type="radio" name="tipo" value="fi_t_psi_t" checked>
+            <label for="fi_t_psi_t">Φ/Ψ</label>
+        
+            <input type="radio" name="tipo" value="fi_t_eta_t">
+            <label for="fi_t_eta_t">Φ/η</label>
+        
+            <input type="radio" name="tipo" value="qtls_hm">
+            <label for="qtls_hm">Qt(ls)/H(m)</label>
+        
+            <input type="radio" name="tipo" value="qtls_eta_t">
+            <label for="qtls_eta_t">Qt(ls)/η</label>
+        </div>
+        <input type="button" value="Visualizar Grafico" onclick="rossi()">
+        <div id="aviso-campo"><span id="aviso"></span></div>
+        <div class="grafico-section">
+            <div id="grafico"></div>
+            <ul id="dados_listar"></ul>
+        </div>
+        <input type="button" value="Gerar relatório" onclick="velocidadeVariavel()">
+    </section>
     <footer>
-        <a href="https://github.com/filipetorresbr"><span>Desenvolvido por Filipe Torres</span></a>
+        <a target="_blank" href="https://github.com/filipetorresbr"><span>Desenvolvido por Filipe Torres</span></a>
     </footer>
 </body>
-<script>
-window.onload = function() {
-  start();
-};
-</script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
-<script src="script.js"></script>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+<script src="yang.js"></script>
 
 </html>

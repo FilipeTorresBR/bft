@@ -2,7 +2,7 @@ let dados = []
 function applyChanges(affectedsRows){
     for (const [key, value] of Object.entries(affectedsRows)) {
         document.getElementById(`${key}`).value=`${value.toPrecision(3)}`
-      }
+    }
 }
 function getDependency(dependency){
     let dependencyObject = {};
@@ -63,6 +63,8 @@ function autoCalculate(field, dependency) {
         velocidade_especifica_turbina_rad = 2*Math.PI*velocidade_especifica_turbina_rps
         applyChanges({"coeficiente_vazao_turbina":coeficiente_vazao_turbina, "coeficiente_altura_turbina":coeficiente_altura_turbina, "fluxo_turbina_m3s":fluxo_turbina_m3s, "fluxo_turbina_m3h":fluxo_turbina_m3h, "altura_turbina":altura_turbina, "coeficiente_vazao_turbina_mpe":coeficiente_vazao_turbina_mpe, "coeficiente_altura_turbina_mpe":coeficiente_altura_turbina_mpe, "velocidade_especifica_turbina_rps":velocidade_especifica_turbina_rps, "velocidade_especifica_turbina_rad":velocidade_especifica_turbina_rad})
     }
+
+
     if (inputName == "eficiencia_real"){
         coeficiente_vazao_turbina = ((1.2)/Math.pow(inputValue, 0.55))
         coeficiente_altura_turbina = ((1.2)/Math.pow(inputValue, 1.1))
@@ -137,7 +139,7 @@ function generatePlot(dependency){
         },
         showlegend: true,
         legend: {
-            x: 1,
+            x: 1.3,
             xanchor: 'right',
             y: 1
           },
@@ -209,7 +211,7 @@ function generatePlot(dependency){
             break;
     }
     analiseModelo(['fluxo_valvula', 'altura_valvula', 'fluxo_turbina_m3s', 'altura_turbina']);
-    Plotly.newPlot('grafico', data, layout, {responsive: true});
+    Plotly.newPlot('grafico', data, layout, {responsive: false});
 }
 function start(){
     autoCalculate(document.getElementById('eficiencia_estimada'), ['fluxo_valvula', 'altura_valvula', 'rotacao_bomba_rpm'])

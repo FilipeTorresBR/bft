@@ -1,7 +1,7 @@
 :root{
-    --primary-color: #e9ecef;
-    --secondary-color: #212529;
-    --terciary-color: #6c757d;
+    --primary-color: #333333;
+    --secondary-color: #FAFAFA;
+    --terciary-color: #FFFFFF;
 }
 *{
     margin: 0;
@@ -27,7 +27,8 @@ h2{
     align-items: center;
     background-color: var(--terciary-color);
     color: var(--primary-color);
-    border-radius: 25px;
+    border-radius: 20px;
+    border: 1px solid #CBC3E3;
     margin: 25px;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
     padding: 15px;
@@ -36,7 +37,6 @@ h2{
 .section .model{
     padding: 15px;
     margin-bottom: 10px;
-    border-radius: 25px;
     width: 95%;
     height: auto;
     display: flex;
@@ -53,9 +53,9 @@ h2{
     color: var(--primary-color);
 }
 .field input{
-    padding: 15px;
+    padding: 10px 10px;
     width: 75px;
-    border-radius: 15px;
+    border-radius: 10px;
     border: 1px solid black;
     background-color: ghostwhite;
     font-size: medium;
@@ -79,15 +79,17 @@ label{
 }
 input[type="button"]{
     padding: 20px 35px;
+    border: 1px solid #CBC3E3;
     margin: 10px;
     border-radius: 15px;
     font-size: medium;
     color: var(--primary-color);
     background-color: var(--secondary-color) !important;
-    border: 0px solid black;
 }
 input[type="button"]:hover{
     cursor: pointer;
+    border: 2px solid #CBC3E3;
+
 }
 input[type="radio"]{
     width: 15px;
@@ -192,7 +194,7 @@ footer a{
     border-radius: 10px;
 }
 #grafico{
-    width: fit-content;
+    width: 40vw;
     height: fit-content;
 }
 @media (max-width: 1300px) {
