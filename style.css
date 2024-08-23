@@ -121,6 +121,7 @@ input[type="radio"]{
     color: var(--primary-color);
     text-align: center;
     border-radius: 6px;
+    border: 1px solid #CBC3E3;
     padding: 5px;
     position: absolute;
     z-index: 1;
@@ -186,6 +187,7 @@ footer a{
 }
 .grafico_btn input{
     font-size: 18px;
+    border: 1px solid black;
 }
 .list{
     background-color: var(--secondary-color);
@@ -206,3 +208,43 @@ footer a{
         height: fit-content;
     }
 }
+
+/* From Uiverse.io by Yaya12085 */ 
+.radio-inputs {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    border-radius: 0.5rem;
+    background-color: #EEE;
+    box-sizing: border-box;
+    box-shadow: 0 0 0px 1px rgba(0, 0, 0, 0.06);
+    padding: 0.25rem;
+    width: 300px;
+    font-size: 14px;
+  }
+  
+  .radio-inputs .radio {
+    flex: 1 1 auto;
+    text-align: center;
+  }
+  
+  .radio-inputs .radio input {
+    display: none;
+  }
+  
+  .radio-inputs .radio .name {
+    display: flex;
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0.5rem;
+    border: none;
+    padding: .5rem 0;
+    color: rgba(51, 65, 85, 1);
+    transition: all .15s ease-in-out;
+  }
+  
+  .radio-inputs .radio input:checked + .name {
+    background-color: #fff;
+    font-weight: 600;
+  }

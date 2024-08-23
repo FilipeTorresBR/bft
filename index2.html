@@ -234,18 +234,23 @@
         </div>
     </section>
     <section class="section">
-        <div>
-            <input type="radio" name="tipo" value="fi_t_psi_t" checked>
-            <label for="fi_t_psi_t">Φ/Ψ</label>
-        
-            <input type="radio" name="tipo" value="fi_t_eta_t">
-            <label for="fi_t_eta_t">Φ/η</label>
-        
-            <input type="radio" name="tipo" value="qtls_hm">
-            <label for="qtls_hm">Qt(ls)/H(m)</label>
-        
-            <input type="radio" name="tipo" value="qtls_eta_t">
-            <label for="qtls_eta_t">Qt(ls)/η</label>
+        <div class="radio-inputs">
+            <label class="radio">
+                <input type="radio" name="tipo" value="fi_t_psi_t" checked>
+                <span class="name" for="fi_t_psi_t">Φ/Ψ</span>
+            </label>
+            <label class="radio">
+                <input type="radio" name="tipo" value="fi_t_eta_t">
+                <span class="name" for="fi_t_eta_t">Φ/η</span>
+            </label>
+            <label class="radio">
+                <input type="radio" name="tipo" value="qtls_hm">
+                <span class="name" for="qtls_hm">Qt(ls)/H(m)</span>
+            </label>
+            <label class="radio">
+                <input type="radio" name="tipo" value="qtls_eta_t">
+                <span class="name" for="qtls_eta_t">Qt(ls)/η</span>
+            </label>
         </div>
         <input type="button" value="Visualizar Grafico" onclick="rossi()">
         <div id="aviso-campo"><span id="aviso"></span></div>
@@ -253,7 +258,7 @@
             <div id="grafico"></div>
             <ul id="dados_listar"></ul>
         </div>
-        <input type="button" value="Gerar relatório" onclick="velocidadeVariavel()">
+        <!--input type="button" value="Gerar relatório" onclick="velocidadeVariavel()"-->
     </section>
     <footer>
         <a target="_blank" href="https://github.com/filipetorresbr"><span>Desenvolvido por Filipe Torres</span></a>

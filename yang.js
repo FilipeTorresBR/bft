@@ -97,6 +97,7 @@ function rossi(){
     let coeficiente_vazao_turbina_mpe = getter('coeficiente_vazao_turbina_mpe')
     let coeficiente_altura_turbina_mpe = getter('coeficiente_altura_turbina_mpe')
     let rotacao_bomba_rps = getter('rotacao_bomba_rps')
+    let rotacao_bomba_rpm = getter('rotacao_bomba_rpm')
     let diametro_bomba = getter('diametro_bomba')
     let eficiencia_real = getter('eficiencia_real')
 
@@ -114,18 +115,17 @@ function rossi(){
         altura_bft.push((pressao_bft[x]* Math.pow(rotacao_bomba_rps * diametro_bomba, 2)) / 9.81)
     }
     if (Object.values(dados).length === 0) {
-        dados.push({'fluxo_bft':fluxo_bft, 'pressao_bft':pressao_bft, 'eficiencia_bft':eficiencia_bft, 'vazao_ls_bft': vazao_ls_bft, 'altura_bft' : altura_bft})    
-        $("#dados_listar").append("<li id=li_"+dados.length+" class='list'>Linha "+dados.length+" <button type='button' style='background-color: transparent; border: none;' onclick='deleteFromList("+ dados.length+")'><img class='icon' src='assets/img/trash.png'></button></li>");
+        dados.push({'fluxo_bft':fluxo_bft, 'pressao_bft':pressao_bft, 'eficiencia_bft':eficiencia_bft, 'vazao_ls_bft': vazao_ls_bft, 'altura_bft' : altura_bft, 'rotacao_bomba_rpm' : rotacao_bomba_rpm})    
+        $("#dados_listar").append("<li id=li_"+dados.length+" class='list'>Linha "+rotacao_bomba_rpm+" <button type='button' style='background-color: transparent; border: none;' onclick='deleteFromList("+ dados.length+")'><img class='icon' src='assets/img/trash.png'></button></li>");
     }else if(JSON.stringify(Object.values(dados[dados.length - 1])) !== JSON.stringify(Object.values({'fluxo_bft':fluxo_bft, 'pressao_bft':pressao_bft, 'eficiencia_bft':eficiencia_bft, 'vazao_ls_bft': vazao_ls_bft, 'altura_bft' : altura_bft}))){
-        dados.push({'fluxo_bft':fluxo_bft, 'pressao_bft':pressao_bft, 'eficiencia_bft':eficiencia_bft, 'vazao_ls_bft': vazao_ls_bft, 'altura_bft' : altura_bft})
-        $("#dados_listar").append("<li id=li_"+dados.length+" class='list'>Linha "+dados.length+" <button type='button' style='background-color: transparent; border: none;' onclick='deleteFromList("+ dados.length+")'><img class='icon' src='assets/img/trash.png'></button></li>");
+        dados.push({'fluxo_bft':fluxo_bft, 'pressao_bft':pressao_bft, 'eficiencia_bft':eficiencia_bft, 'vazao_ls_bft': vazao_ls_bft, 'altura_bft' : altura_bft, 'rotacao_bomba_rpm' : rotacao_bomba_rpm})
+        $("#dados_listar").append("<li id=li_"+dados.length+" class='list'>Linha "+rotacao_bomba_rpm+" <button type='button' style='background-color: transparent; border: none;' onclick='deleteFromList("+ dados.length+")'><img class='icon' src='assets/img/trash.png'></button></li>");
     }
     console.log("rossi")
     grafico(fluxo_bft, pressao_bft, eficiencia_bft, vazao_ls_bft, altura_bft, dados)
 }
 
 function grafico(fluxo_bft, pressao_bft, eficiencia_bft, vazao_ls_bft, altura_bft, dados){
-    let rotacao_bomba_rpm = getter("rotacao_bomba_rpm")
     let layout_placeholder = {
         xaxis: {
             showgrid: false,
@@ -153,7 +153,7 @@ function grafico(fluxo_bft, pressao_bft, eficiencia_bft, vazao_ls_bft, altura_bf
             xanchor: 'right',
             y: 1
           },
-        paper_bgcolor: "#fefefe",
+        paper_bgcolor: "#fdfdfd",
     }
     tipo = document.querySelector('input[name="tipo"]:checked').value;
     var layout = layout_placeholder;
@@ -165,7 +165,7 @@ function grafico(fluxo_bft, pressao_bft, eficiencia_bft, vazao_ls_bft, altura_bf
                 data.push({
                     x: dados[x]['fluxo_bft'],
                     y: dados[x]['pressao_bft'],
-                    name: rotacao_bomba_rpm,
+                    name: dados[x]['rotacao_bomba_rpm'],
                     line: {shape: 'spline'},
                 })
             }
