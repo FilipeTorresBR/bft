@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+    <!DOCTYPE html>
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
@@ -14,8 +14,8 @@
             <div class="field">
                 <label for="fluxo_valvula">Fluxo da Valvula - Qti (m³/s)</label>
                 <div>
-                    <input type="number" id="fluxo_valvula" name="fluxo_valvula" onchange="fluxoValvula(this)" value="0.0198" placeholder="0.00">
-                    <select name="fluxo_valvula_unidade" id="fluxo_valvula_unidade" required>
+                    <input type="text" id="fluxo_valvula" name="fluxo_valvula" onchange="autoCalculate('eficiencia_estimada', ['fluxo_valvula', 'altura_valvula', 'rotacao_bomba_rpm'])" value="0.0198">
+                    <select name="fluxo_valvula_unidade" required>
                         <option value="m3s">m³/s</option>
                         <option value="m3h">m³/h</option>
                     </select>
@@ -23,11 +23,11 @@
             </div>
             <div class="field">
                 <label for="fluxo_valvula_convertido">Fluxo da Valvula - Qti (m³/h)</label>
-                <input type="number" id="fluxo_valvula_convertido" name="fluxo_valvula_convertido" readonly placeholder="0.00">
+                <input type="text" id="fluxo_valvula_convertido" name="fluxo_valvula_convertido" readonly>
             </div>            
             <div class="field">
                 <label for="altura_valvula">Altura da Valvula - Hti (m)</label>
-                <input type="number" id="altura_valvula" name="altura_valvula" onchange="" value="39.89" placeholder="0.00">
+                <input type="text" id="altura_valvula" name="altura_valvula" onchange="autoCalculate('eficiencia_estimada', ['fluxo_valvula', 'altura_valvula', 'rotacao_bomba_rpm'])" value="39.89">
             </div>    
         </div>
         <h2>Yang</h2>
@@ -39,7 +39,7 @@
                         <div class="tooltip">Valor de eficiencia estimada da bomba. Entre 0 e 1</div>
                     </div>
                 </label>
-                <input type="number" id="eficiencia_estimada" name="eficiencia_estimada" onchange="eficiencia(this)" min="0" max="1" placeholder="0.7" placeholder="0.00">
+                <input type="text" id="eficiencia_estimada" name="eficiencia_estimada" onchange="autoCalculate(this, ['fluxo_valvula', 'altura_valvula', 'rotacao_bomba_rpm'])" min="0" max="1" value="0.7">
             </div>
             <div class="field">
                 <label for="coeficiente_vazao_bomba">Coeficiente de vazão da bomba - (q)
@@ -55,7 +55,7 @@
                         </div>
                     </div>
                 </label>
-                <input type="number" id="coeficiente_vazao_bomba" name="coeficiente_vazao_bomba" readonly="true" placeholder="0.00">
+                <input type="text" id="coeficiente_vazao_bomba" name="coeficiente_vazao_bomba" readonly="true">
             </div>
             <div class="field">
                 <label for="coeficiente_altura_bomba">Coeficiente de altura da bomba - (h)
@@ -71,7 +71,7 @@
                         </div>
                     </div>
                 </label>
-                <input type="number" id="coeficiente_altura_bomba" name="coeficiente_altura_bomba" readonly="true" placeholder="0.00">
+                <input type="text" id="coeficiente_altura_bomba" name="coeficiente_altura_bomba" readonly="true">
             </div>
             <div class="field">
                 <label for="fluxo_bomba_m3s">Fluxo da bomba - Qb(m³/s)
@@ -87,7 +87,7 @@
                         </div>
                     </div>
                 </label>
-                <input type="number" id="fluxo_bomba_m3s" name="fluxo_bomba_m3s" readonly="true" placeholder="0.00">
+                <input type="text" id="fluxo_bomba_m3s" name="fluxo_bomba_m3s" readonly="true">
             </div>    
             <div class="field">
                 <label for="fluxo_bomba_m3h">Fluxo da bomba - Qb(m³/h)
@@ -102,7 +102,7 @@
                         </div>
                     </div>
                 </label>
-                <input type="number" id="fluxo_bomba_m3h" name="fluxo_bomba_m3h" readonly="true" placeholder="0.00">
+                <input type="text" id="fluxo_bomba_m3h" name="fluxo_bomba_m3h" readonly="true">
             </div>    
             <div class="field">
                 <label for="altura_bomba">Altura da bomba - Hb(m)
@@ -118,7 +118,7 @@
                         </div>
                     </div>
                 </label>
-                <input type="number" id="altura_bomba" name="altura_bomba" readonly="true" placeholder="0.00">
+                <input type="text" id="altura_bomba" name="altura_bomba" readonly="true">
             </div>   
             <div class="field">
                 <label for="rotacao_bomba_rpm">Rotação da bomba - N(rpm)
@@ -127,7 +127,7 @@
                         <div class="tooltip">Fornecido pelo fabricante da bomba</div>
                     </div>
                 </label>
-                <input type="number" id="rotacao_bomba_rpm" name="rotacao_bomba_rpm" onchange="rotacaoBomba(this.value)" placeholder="0000">
+                <input type="text" id="rotacao_bomba_rpm" name="rotacao_bomba_rpm" onchange="autoCalculate('eficiencia_estimada', ['fluxo_valvula', 'altura_valvula', 'rotacao_bomba_rpm'])" value="3500">
             </div>     
             <div class="field">
                 <label for="rotacao_bomba_rps">Rotação da bomba - N(rps)
@@ -143,7 +143,7 @@
                         </div>
                     </div>
                 </label>
-                <input type="number" id="rotacao_bomba_rps" name="rotacao_bomba_rps" readonly="true" placeholder="0.00">
+                <input type="text" id="rotacao_bomba_rps" name="rotacao_bomba_rps" readonly="true">
             </div>     
             <div class="field">
                 <label for="diametro_bomba">Diamentro da bomba - D(m)
@@ -152,14 +152,14 @@
                         <div class="tooltip">Fornecido pelo fabricante da bomba</div>
                     </div>
                 </label>
-                <input type="number" id="diametro_bomba" name="diametro_bomba" onchange="" value="0.123">
+                <input type="text" id="diametro_bomba" name="diametro_bomba" onchange="autoCalculate('eficiencia_estimada', ['fluxo_valvula', 'altura_valvula', 'rotacao_bomba_rpm'])" value="0.123">
             </div>   
             <div class="field">
                 <label for="p_kw">P (kW)</label>
-                <input type="number" id="p_kw" name="p_kw" onchange="" placeholder="0.00">
+                <input type="text" id="p_kw" name="p_kw" onchange="autoCalculate('eficiencia_estimada', ['fluxo_valvula', 'altura_valvula', 'rotacao_bomba_rpm'])">
             </div> 
             <div class="field">
-                <label for="velocidade_especifica_rps">Velocidade específica da bomba - Ns(rps)
+                <label for="velocidade_especifica_rps">Velocidade específica - Ns(rps)
                     <div class="icon-container">
                         <div class="icon info"></div>
                         <div class="tooltip">Definido por: 
@@ -172,10 +172,10 @@
                         </div>
                     </div>
                 </label>
-                <input type="number" id="velocidade_especifica_bomba_rps" name="velocidade_especifica_bomba_rps" readonly="true"  placeholder="0.00">
+                <input type="text" id="velocidade_especifica_rps" name="velocidade_especifica_rps" readonly="true">
             </div>  
             <div class="field">
-                <label for="velocidade_especifica_bomba_rad">Velocidade específica da bomba - Ns(rad/s)
+                <label for="velocidade_especifica_rad">Velocidade específica - Ns(rad/s)
                     <div class="icon-container">
                         <div class="icon info"></div>
                         <div class="tooltip">Definido por: 
@@ -187,84 +187,84 @@
                         </div>
                     </div>
                 </label>
-                <input type="number" id="velocidade_especifica_bomba_rad" name="velocidade_especifica_bomba_rad" readonly="true"  placeholder="0.00">
+                <input type="text" id="velocidade_especifica_rad" name="velocidade_especifica_rad" readonly="true">
             </div>  
         </div>
         <div class="model" id="yang2">
             <div class="field">
                 <label for="eficiencia_real">Eficienciencia real - (ηb)</label>
-                <input type="number" id="eficiencia_real" name="eficiencia_real" onchange="eficiencia(this)" placeholder="0.00">
+                <input type="text" id="eficiencia_real" name="eficiencia_real" onchange="autoCalculate(this, ['fluxo_bomba_m3s', 'altura_bomba', 'rotacao_bomba_rps', 'diametro_bomba'])" value="0.67">
             </div>
             <div class="field">
                 <label for="coeficiente_vazao_turbina">Coeficiente de vazão da turbina - (q)</label>
-                <input type="number" id="coeficiente_vazao_turbina" name="coeficiente_vazao_turbina" readonly="true" placeholder="0.00">
+                <input type="text" id="coeficiente_vazao_turbina" name="coeficiente_vazao_turbina" readonly="true">
             </div>
             <div class="field">
                 <label for="coeficiente_altura_turbina">Coeficiente de altura da turbina - (h)</label>
-                <input type="number" id="coeficiente_altura_turbina" name="coeficiente_altura_turbina" readonly="true" placeholder="0.00">
+                <input type="text" id="coeficiente_altura_turbina" name="coeficiente_altura_turbina" readonly="true">
             </div>
             <div class="field">
                 <label for="fluxo_turbina_m3s">Fluxo da turbina - Qt(m³/s)</label>
-                <input type="number" id="fluxo_turbina_m3s" name="fluxo_turbina_m3s" readonly="true" placeholder="0.00">
+                <input type="text" id="fluxo_turbina_m3s" name="fluxo_turbina_m3s" readonly="true">
             </div>
             <div class="field">
                 <label for="fluxo_turbina_m3h">Fluxo da turbina - Qt(m³/h)</label>
-                <input type="number" id="fluxo_turbina_m3h" name="fluxo_turbina_m3h" readonly="true" placeholder="0.00">
+                <input type="text" id="fluxo_turbina_m3h" name="fluxo_turbina_m3h" readonly="true">
             </div>
             <div class="field">
                 <label for="altura_turbina">Altura da turbina - Ht(m)</label>
-                <input type="number" id="altura_turbina" name="altura_turbina" readonly="true" placeholder="0.00">
+                <input type="text" id="altura_turbina" name="altura_turbina" readonly="true">
             </div>
             <div class="field">
                 <label for="coeficiente_vazao_turbina_mpe">Coeficiente de vazão da turbina no MPE (φ)</label>
-                <input type="number" id="coeficiente_vazao_turbina_mpe" name="coeficiente_vazao_turbina_mpe" readonly="true" placeholder="0.00">
+                <input type="text" id="coeficiente_vazao_turbina_mpe" name="coeficiente_vazao_turbina_mpe" readonly="true">
             </div>
             <div class="field">
                 <label for="coeficiente_altura_turbina_mpe">Coeficiente de pressão da turbina no MPE (ψ)</label>
-                <input type="number" id="coeficiente_altura_turbina_mpe" name="coeficiente_altura_turbina_mpe" readonly="true" placeholder="0.00">
+                <input type="text" id="coeficiente_altura_turbina_mpe" name="coeficiente_altura_turbina_mpe" readonly="true">
             </div>
             <div class="field">
-                <label for="velocidade_especifica_turbina_rps">Velocidade específica da turbina N(rps)</label>
-                <input type="number" id="velocidade_especifica_turbina_rps" name="velocidade_especifica_turbina_rps" readonly="true" placeholder="0.00">
+                <label for="velocidade_especifica_turbina_rps">Velocidade específica N(rps)</label>
+                <input type="text" id="velocidade_especifica_turbina_rps" name="velocidade_especifica_turbina_rps" readonly="true">
             </div>
             <div class="field">
-                <label for="velocidade_especifica_turbina_rad">Velocidade específica da turbina Ns(rad/s)</label>
-                <input type="number" id="velocidade_especifica_turbina_rad" name="velocidade_especifica_turbina_rad" readonly="true" placeholder="0.00">
+                <label for="velocidade_especifica_turbina_rad">Velocidade específica Ns(rad/s)</label>
+                <input type="text" id="velocidade_especifica_turbina_rad" name="velocidade_especifica_turbina_rad" readonly="true">
             </div>
         </div>
     </section>
     <section class="section">
-        <div class="radio-inputs">
-            <label class="radio">
-                <input type="radio" name="tipo" value="fi_t_psi_t" checked>
-                <span class="name" for="fi_t_psi_t">Φ/Ψ</span>
-            </label>
-            <label class="radio">
-                <input type="radio" name="tipo" value="fi_t_eta_t">
-                <span class="name" for="fi_t_eta_t">Φ/η</span>
-            </label>
-            <label class="radio">
-                <input type="radio" name="tipo" value="qtls_hm">
-                <span class="name" for="qtls_hm">Qt(ls)/H(m)</span>
-            </label>
-            <label class="radio">
-                <input type="radio" name="tipo" value="qtls_eta_t">
-                <span class="name" for="qtls_eta_t">Qt(ls)/η</span>
-            </label>
+        <div>
+            <input type="radio" name="tipo" value="fi_t_psi_t" required>
+            <label for="fi_t_psi_t">Φ/Ψ</label>
+        
+            <input type="radio" name="tipo" value="fi_t_eta_t">
+            <label for="fi_t_eta_t">Φ/η</label>
+        
+            <input type="radio" name="tipo" value="qtls_hm">
+            <label for="qtls_hm">Qt(ls)/H(m)</label>
+        
+            <input type="radio" name="tipo" value="qtls_eta_t">
+            <label for="qtls_eta_t">Qt(ls)/η</label>
         </div>
-        <input type="button" value="Visualizar Grafico" onclick="rossi()">
+        <input type="button" value="Visualizar Grafico" onclick="generatePlot(['coeficiente_altura_turbina_mpe', 'coeficiente_vazao_turbina_mpe', 'rotacao_bomba_rps', 'diametro_bomba', 'eficiencia_real'])">
         <div id="aviso-campo"><span id="aviso"></span></div>
         <div class="grafico-section">
             <div id="grafico"></div>
             <ul id="dados_listar"></ul>
         </div>
-        <!--input type="button" value="Gerar relatório" onclick="velocidadeVariavel()"-->
+        <input type="button" value="Gerar relatório" onclick="generatePlot(['coeficiente_altura_turbina_mpe', 'coeficiente_vazao_turbina_mpe', 'rotacao_bomba_rps', 'diametro_bomba', 'eficiencia_real'])">
     </section>
     <footer>
         <a target="_blank" href="https://github.com/filipetorresbr"><span>Desenvolvido por Filipe Torres</span></a>
     </footer>
 </body>
+<script>
+window.onload = function() {
+  start();
+};
+</script>
 <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
-<script src="yang.js"></script>
+<script src="script.js"></script>
 
 </html>

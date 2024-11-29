@@ -1,7 +1,7 @@
 var dados = []
 function applyChanges(affectedsRows){
     for (const [key, value] of Object.entries(affectedsRows)) {
-        document.getElementById(`${key}`).value=`${value.toPrecision(3)}`
+        document.getElementById(`${key}`).value=`${value.toPrecision(4)}`
     }
 }
 function getter(item){
@@ -57,7 +57,7 @@ function altura(input_field){
     applyChanges({["altura_"+input_field]:altura})
 }
 function rotacaoBomba(rotacao_bomba_rpm){
-    rotacao_bomba_rpm = parseFloat(rotacao_bomba_rpm)
+    rotacao_bomba_rpm = parseInt(rotacao_bomba_rpm)
     let rotacao_bomba_rps = rotacao_bomba_rpm / 60
     console.log(rotacao_bomba_rpm, rotacao_bomba_rps)
     applyChanges({"rotacao_bomba_rpm":rotacao_bomba_rpm, "rotacao_bomba_rps":rotacao_bomba_rps})
@@ -101,17 +101,17 @@ function rossi(){
     let diametro_bomba = getter('diametro_bomba')
     let eficiencia_real = getter('eficiencia_real')
 
-    fluxo_bft.push(coeficiente_vazao_turbina_mpe)
-    for(x=1;x<40;x++){
-        fluxo_bft.unshift(fluxo_bft[x - 1] - (0.003 * x))
-    }
-    for(x=40; x<60; x++){
+    fluxo_bft.push(0.064)
+
+    for(let x = 1; x<60;x++){
         fluxo_bft.push(fluxo_bft[x - 1] + 0.003)
     }
+
+
     for (x = 0; x<fluxo_bft.length; x++){
         pressao_bft.push(coeficiente_altura_turbina_mpe*(0.2394*Math.pow(fluxo_bft[x]/coeficiente_vazao_turbina_mpe, 2) + 0.769*(fluxo_bft[x]/coeficiente_vazao_turbina_mpe)))
         eficiencia_bft.push(((-1.9788*(Math.pow(fluxo_bft[x]/coeficiente_vazao_turbina_mpe, 6)))+(9.0636*(Math.pow(fluxo_bft[x]/coeficiente_vazao_turbina_mpe, 5)))-(13.148*(Math.pow(fluxo_bft[x]/coeficiente_vazao_turbina_mpe, 4)))+(3.8527*(Math.pow(fluxo_bft[x]/coeficiente_vazao_turbina_mpe, 3)))+(4.5614*(Math.pow(fluxo_bft[x]/coeficiente_vazao_turbina_mpe, 2)))-(1.3769*((fluxo_bft[x]/coeficiente_vazao_turbina_mpe))))*(eficiencia_real))
-        vazao_ls_bft.push((((fluxo_bft[x])*((rotacao_bomba_rps)*(Math.pow(diametro_bomba, 3))))*1000)/3.6)
+        vazao_ls_bft.push((((fluxo_bft[x])*((rotacao_bomba_rps)*(Math.pow(diametro_bomba, 3))))*1000))
         altura_bft.push((pressao_bft[x]* Math.pow(rotacao_bomba_rps * diametro_bomba, 2)) / 9.81)
     }
     if (Object.values(dados).length === 0) {
@@ -121,7 +121,7 @@ function rossi(){
         dados.push({'fluxo_bft':fluxo_bft, 'pressao_bft':pressao_bft, 'eficiencia_bft':eficiencia_bft, 'vazao_ls_bft': vazao_ls_bft, 'altura_bft' : altura_bft, 'rotacao_bomba_rpm' : rotacao_bomba_rpm})
         $("#dados_listar").append("<li id=li_"+dados.length+" class='list'>Linha "+rotacao_bomba_rpm+" <button type='button' style='background-color: transparent; border: none;' onclick='deleteFromList("+ dados.length+")'><img class='icon' src='assets/img/trash.png'></button></li>");
     }
-    console.log("rossi")
+    console.log(fluxo_bft, pressao_bft, eficiencia_bft, vazao_ls_bft, altura_bft)
     grafico(fluxo_bft, pressao_bft, eficiencia_bft, vazao_ls_bft, altura_bft, dados)
 }
 
@@ -153,7 +153,7 @@ function grafico(fluxo_bft, pressao_bft, eficiencia_bft, vazao_ls_bft, altura_bf
             xanchor: 'right',
             y: 1
           },
-        paper_bgcolor: "#fdfdfd",
+        paper_bgcolor: "#fcfcfc",
     }
     tipo = document.querySelector('input[name="tipo"]:checked').value;
     var layout = layout_placeholder;
