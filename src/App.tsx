@@ -28,7 +28,7 @@ import { Select,
 } from "@/components/ui/select"
 import { useForm, Controller } from 'react-hook-form';
 import { z } from 'zod'
-import { zodResolver } from '@hookform/resolvers/zod'
+//import { zodResolver } from '@hookform/resolvers/zod'
 
 const schema = z.object({
   output: z.number().default(0),
@@ -61,7 +61,7 @@ export function App() {
 
   useEffect(() => {
     Object.entries(calculations).forEach(([output, func]) => {
-      setValue(output as keyof FormData, parseFloat(func(formValues).toFixed(2)));
+      setValue(output as keyof FormData, parseFloat(func(formValues).toFixed(3)));
     });
   }, [formValues, setValue]);
 
@@ -79,7 +79,6 @@ export function App() {
                 <CardHeader>
                   <CardTitle>Aproveitamento da Valvula</CardTitle>
                   <CardDescription>
-                    Make changes to your account here. Click save when you're done.
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-2">
@@ -91,7 +90,7 @@ export function App() {
                         name="fluxo_valvula"
                         control={control}
                         render={({ field }) => (
-                          <Input type="text" {...field} />
+                          <Input type="number" {...field} />
                         )}
                       />
                     </div>
@@ -99,6 +98,7 @@ export function App() {
                       <Controller
                         name="fluxo_valvula_unidade"
                         control={control}
+                        defaultValue="m3s"  
                         render={({ field }) => (
                           <Select {...field}>
                             <SelectTrigger className="w-[75px]">
@@ -133,7 +133,7 @@ export function App() {
                       name="altura_valvula"
                       control={control}
                       render={({ field }) => (
-                        <Input type="text" {...field} />
+                        <Input type="number" {...field} />
                       )}
                     />
                   </div>
@@ -146,7 +146,7 @@ export function App() {
                       name="eficiencia_estimada"
                       control={control}
                       render={({ field }) => (
-                        <Input type="text" placeholder="0.7" {...field} />
+                        <Input type="number" placeholder="0.7" {...field} />
                       )}
                     />
                   </div>
@@ -224,7 +224,7 @@ export function App() {
                       name="rotacao_rpm"
                       control={control}
                       render={({ field }) => (
-                        <Input type="text" placeholder="0000" {...field} />
+                        <Input type="number" placeholder="0000" {...field} />
                       )}
                     />
                   </div>
@@ -250,7 +250,7 @@ export function App() {
                       name="diametro_bomba"
                       control={control}
                       render={({ field }) => (
-                        <Input type="text" placeholder="0.123" {...field} />
+                        <Input type="number" placeholder="0.123" {...field} />
                       )}
                     />
                   </div>
